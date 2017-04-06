@@ -23,7 +23,7 @@ public class Gui extends JFrame {
     private JButton start, pause, stop;
     private JPanel north, center, south, innerNorth1, innerNorth2, innerNorth3;
     private String path;
-    private ArrayList<SeqIndex> seqIndices;
+    private ArrayList<Node> seqIndices;
 
     /*
         Default constructor that sets up the GUI
@@ -203,18 +203,18 @@ public class Gui extends JFrame {
         Method that reads data from a text file chosen via the JFileChooser
      */
     public void writeInput() throws IOException {
-        seqIndices = new ArrayList<SeqIndex>();
+        seqIndices = new ArrayList<Node>();
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line, data;
         data = br.readLine() + "\n";
         
         while((line = br.readLine())!=null){
             String[] values = line.split(",");
-            Double[] doubleValues = new Double[values.length];
+            double[] doubleValues = new double[values.length];
             for(int i=0; i<values.length; i++){
                 doubleValues[i] = Double.parseDouble(values[i]);
             }
-            SeqIndex temp = new SeqIndex(doubleValues[0],doubleValues[1],doubleValues[2],doubleValues[3]);
+            Node temp = new Node(doubleValues[0],doubleValues[1],doubleValues[2],doubleValues[3]);
             seqIndices.add(temp);
             data+=line + "\n";
         }
