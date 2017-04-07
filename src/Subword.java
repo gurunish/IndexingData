@@ -9,23 +9,21 @@ public class Subword {
     private int D;
     private double actualProbability, tempProbability;
 
-    public Subword(ArrayList<Node> subWord) {
-        this.subWord = subWord;
+    public Subword(Node node) {
+        this.subWord.add(node);
+//        actualProbability=
+
     }
 
     public double getActualProbability() {
         return actualProbability;
     }
 
-    public void setActualProbability(double actualProbability) {
-        this.actualProbability = actualProbability;
-    }
-
     public double getTempProbability() {
         return tempProbability;
     }
 
-    public void setTempProbability(double tempProbability) {
-        this.tempProbability = tempProbability;
+    public void addNode(Node node){
+        subWord.add(node);
     }
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class WeightedSuffixTree {
     private ArrayList<Node> weightedSequence;
     private double k;
-    //stores black indices as 1, 0 for non-black
+    //stores the indices of black positions
     private ArrayList<Integer> blackIndices;
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
@@ -45,9 +45,22 @@ public class WeightedSuffixTree {
     }
 
     public void generationPhase() {
+
         for(int i: blackIndices){
+            int current = i;
             int counter = 0;
 
+            Subword temp = new Subword(weightedSequence.get(i));
+            while(current+1<colorIndices.length){
+                //Generate a trie of subwords
+            }
+        }
+
+        for(Node temp: weightedSequence){
+            if(temp.getA() > 1 - 1 / k || temp.getC() > 1 - 1 / k ||
+                    temp.getG() > 1 - 1 / k || temp.getT() > 1 - 1 / k ){
+//                extend();
+            }
         }
 
         // TODO: 06/04/2017  
@@ -56,4 +69,9 @@ public class WeightedSuffixTree {
     private void constructionPhase() {
         // TODO: 06/04/2017  
     }
+
+    private void extend(Subword subword, Node node, char c, double probability, int color){
+
+    }
+
 }

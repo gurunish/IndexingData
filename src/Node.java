@@ -34,5 +34,17 @@ public class Node {
         return a;
     }
 
+    public double getActualProbability(char c) {
+        switch(c){
+            case 'a': return getA();
+            case 'c': return getC();
+            case 'g': return getG();
+            case 't': return getG();
+            default: return 0;
+        }
+    }
 
+    public double getTempProbability() {
+        return 1;
+    }
 }
