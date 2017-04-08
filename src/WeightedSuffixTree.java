@@ -46,22 +46,25 @@ public class WeightedSuffixTree {
 
     public void generationPhase() {
 
-        for(int i: blackIndices){
+        for (int i : blackIndices) {
             int current = i;
             int counter = 0;
 
             Subword temp = new Subword(weightedSequence.get(i));
-            while(current+1<colorIndices.length){
+            while (current + 1 < colorIndices.length) {
                 //Generate a trie of subwords
+                
+
+                for (Node tempNode : weightedSequence) {
+                    if (tempNode.getA() > 1 - 1 / k || tempNode.getC() > 1 - 1 / k ||
+                            tempNode.getG() > 1 - 1 / k || tempNode.getT() > 1 - 1 / k) {
+//                extend();
+                    }
+                }
+
             }
         }
 
-        for(Node temp: weightedSequence){
-            if(temp.getA() > 1 - 1 / k || temp.getC() > 1 - 1 / k ||
-                    temp.getG() > 1 - 1 / k || temp.getT() > 1 - 1 / k ){
-//                extend();
-            }
-        }
 
         // TODO: 06/04/2017  
     }
@@ -70,7 +73,7 @@ public class WeightedSuffixTree {
         // TODO: 06/04/2017  
     }
 
-    private void extend(Subword subword, Node node, char c, double probability, int color){
+    private void extend(Subword subword, Node node, char c, double probability, int color) {
 
     }
 

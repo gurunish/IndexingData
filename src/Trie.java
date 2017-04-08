@@ -1,9 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Created by Nishant on 07/04/2017.
+ * Created by Nish on 08/04/2017.
  */
+
+
 public class Trie {
     private TrieNode root;
 
@@ -11,32 +10,62 @@ public class Trie {
         root = new TrieNode();
     }
 
-    /**
-     * Adds a word to the Trie
-     * @param word
-     */
-    public void addWord(String word) {
-        root.addWord(word.toLowerCase());
+    // Inserts a word into the trie.
+    public void insert(String word) {
+        TrieNode p = root;
+        for(int i=0; i<word.length(); i++){
+            char c = word.charAt(i);
+            int index = c-'a';
+            if(p.getArray()[index]==null){
+                TrieNode temp = new TrieNode();
+                p.getArray()[index]=temp;
+                p = temp;
+            }else{
+                p=p.getArray()[index];
+            }
+        }
+        p.setEnd(true);
     }
 
-    /**
-     * Get the words in the Trie with the given
-     * prefix
-     * @param prefix
-     * @return a List containing String objects containing the words in
-     *         the Trie with the given prefix.
-     */
-    public List getWords(String prefix) {
-        //Find the node which represents the last letter of the prefix
-        TrieNode lastNode = root;
-        for (int i=0; i<prefix.length(); i++) {
-            lastNode = lastNode.getNode(prefix.charAt(i));
+    // Returns if the word is in the trie.
+    public boolean search(String word) {
+        TrieNode p = searchNode(word);
+        if(p==null){
+            return false;
+        }else{
+            if(p.isEnd()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-            //If no node matches, then no words exist, return empty list
-            if (lastNode == null) return new ArrayList();
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    public boolean startsWith(String prefix) {
+        TrieNode p = searchNode(prefix);
+        if(p==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public TrieNode searchNode(String s){
+        TrieNode p = root;
+        for(int i=0; i<s.length(); i++){
+            char c= s.charAt(i);
+            int index = c-'a';
+            if(p.getArray()[index]!=null){
+                p = p.getArray()[index];
+            }else{
+                return null;
+            }
         }
 
-        //Return the words which eminate from the last node
-        return lastNode.getWords();
+        if(p==root)
+            return null;
+
+        return p;
     }
 }
