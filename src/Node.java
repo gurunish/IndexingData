@@ -5,7 +5,6 @@ public class Node {
     private double a, c, g, t, actualProbability, tempProbability;
     private int D;
 
-
     public Node(double first, double second, double third, double fourth) {
         a = first;
         c = second;

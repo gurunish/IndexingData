@@ -165,14 +165,12 @@ public class Gui extends JFrame {
 
 //        pause.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent e) {
-//                //todo
 //                //May be redundant/unfeasible
 //            }
 //        } );
 //
 //        stop.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent e) {
-//                //todo
 //                //May be redundant/unfeasible
 //            }
 //        } );
