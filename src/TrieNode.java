@@ -20,4 +20,8 @@ class TrieNode {
     public void setEnd(boolean end) {
         isEnd = end;
     }
+
+    public void setArrayIndex(int index, TrieNode node){
+        array[index] = node;
+    }
 }

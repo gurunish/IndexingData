@@ -13,11 +13,15 @@ public class WeightedSuffixTree {
     private ArrayList<Integer> blackIndices;
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
+    private Trie t;
+    private ArrayList<Trie> LT;
 
     public WeightedSuffixTree(ArrayList<Node> sequence, int constant) {
         weightedSequence = sequence;
         blackIndices = new ArrayList<Integer>();
         colorIndices = new int[weightedSequence.size()];
+        t = new Trie();
+        LT = new ArrayList<Trie>();
         k = constant;
         coloringPhase();
         generationPhase();
@@ -44,29 +48,35 @@ public class WeightedSuffixTree {
         }
     }
 
-    public void generationPhase() {
 
+    public void generationPhase() {
         for (int i : blackIndices) {
-            int current = i;
             int counter = 0;
 
+            int current = i;
             Subword temp = new Subword(weightedSequence.get(i));
-            while (current + 1 < colorIndices.length) {
-                //Generate a trie of subwords
-                
-
+            while (current + 1 < colorIndices.length ) {
                 for (Node tempNode : weightedSequence) {
                     if (tempNode.getA() > 1 - 1 / k || tempNode.getC() > 1 - 1 / k ||
                             tempNode.getG() > 1 - 1 / k || tempNode.getT() > 1 - 1 / k) {
-//                extend();
+//                extend(t, tempNode, character c, proability(c) , color of tempNode);
+                        counter++;
                     }
                 }
+            }
+
+            Node j = weightedSequence.get(i);
+            while(counter>0){
+                j = weightedSequence.get(i+1);
+                counter =0;
+                //for all leaves of T do
+
+                //extend(t, root, character c, proability(c) , color of j);
 
             }
+            //add T to LT
         }
-
-
-        // TODO: 06/04/2017  
+        //return LT
     }
 
     private void constructionPhase() {
