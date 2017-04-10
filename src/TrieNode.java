@@ -3,6 +3,7 @@
  */
 class TrieNode {
     private TrieNode[] array;
+    private double actualProbability, extendedProbability;
     private boolean isEnd;
 
     public TrieNode() {
@@ -21,7 +22,23 @@ class TrieNode {
         isEnd = end;
     }
 
-    public void setArrayIndex(int index, TrieNode node){
+    public void setArrayIndex(int index, TrieNode node) {
         array[index] = node;
+    }
+
+    public double getExtendedProbability() {
+        return extendedProbability;
+    }
+
+    public void setExtendedProbability(double extendedProbability) {
+        this.extendedProbability = extendedProbability;
+    }
+
+    public double getActualProbability() {
+        return actualProbability;
+    }
+
+    public void setActualProbability(double actualProbability) {
+        this.actualProbability = actualProbability;
     }
 }

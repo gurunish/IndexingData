@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 /**
- * Created by Nishant on 05/04/2017.
- * The algorithm for all phases is derived from The Weighted Suffix Tree: An Efficient Data Structure for Handling
- * Molecular Weighted Sequences and its Applications by C. S. Iliopoulous,  C. Makris, Y. Panagis, K. Perdikuri,
+ * Created by Nishant
+ * The algorithm for all phases are derived from "The Weighted Suffix Tree: An Efficient Data Structure for Handling
+ * Molecular Weighted Sequences and its Applications" by C. S. Iliopoulous,  C. Makris, Y. Panagis, K. Perdikuri,
  * E. Theodoridos and A. Tsakalidis (2006)
  */
 public class WeightedSuffixTree {
@@ -48,43 +48,43 @@ public class WeightedSuffixTree {
         }
     }
 
-
     public void generationPhase() {
         for (int i : blackIndices) {
             int counter = 0;
 
             int current = i;
             Subword temp = new Subword(weightedSequence.get(i));
-            while (current + 1 < colorIndices.length ) {
+            while (current + 1 < colorIndices.length) {
                 for (Node tempNode : weightedSequence) {
                     if (tempNode.getA() > 1 - 1 / k || tempNode.getC() > 1 - 1 / k ||
                             tempNode.getG() > 1 - 1 / k || tempNode.getT() > 1 - 1 / k) {
-//                extend(t, tempNode, character c, proability(c) , color of tempNode);
+
+                        //extend(t, t.getRoot(), character c, probability(c), colorIndices[i]);
                         counter++;
                     }
                 }
             }
 
             Node j = weightedSequence.get(i);
-            while(counter>0){
-                j = weightedSequence.get(i+1);
-                counter =0;
-                //for all leaves of T do
+            while (counter > 0) {
+                j = weightedSequence.get(i + 1);
+                counter = 0;
+                //for all leaves of t do
 
-                //extend(t, root, character c, proability(c) , color of j);
+                //extend(t, root, character c, probability(c) , color of j);
 
             }
-            //add T to LT
+            LT.add(t);
         }
-        //return LT
     }
 
     private void constructionPhase() {
         // TODO: 06/04/2017  
     }
 
-    private void extend(Subword subword, Node node, char c, double probability, int color) {
+    private void extend(Trie trie, TrieNode node, char c, double probabilityOfC, int color) {
+        if(node.getExtendedProbability() * probabilityOfC >= 1/k){
 
+        }
     }
-
 }

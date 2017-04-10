@@ -23,7 +23,7 @@ public class Subword {
         return tempProbability;
     }
 
-    public void addNode(Node node){
+    public void addNode(Node node) {
         subWord.add(node);
     }
 }

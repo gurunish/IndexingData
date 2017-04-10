@@ -1,5 +1,6 @@
 /**
- * Created by Nish on 05/04/2017.
+ * Created by Nishant
+ * This classs represents each node of the weighted sequence
  */
 public class Node {
     private double a, c, g, t, actualProbability, tempProbability;
@@ -34,12 +35,17 @@ public class Node {
     }
 
     public double getActualProbability(char c) {
-        switch(c){
-            case 'a': return getA();
-            case 'c': return getC();
-            case 'g': return getG();
-            case 't': return getG();
-            default: return 0;
+        switch (c) {
+            case 'a':
+                return getA();
+            case 'c':
+                return getC();
+            case 'g':
+                return getG();
+            case 't':
+                return getG();
+            default:
+                return 0;
         }
     }
 

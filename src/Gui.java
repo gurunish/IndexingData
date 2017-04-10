@@ -10,8 +10,10 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
-/*
-    Class that is responsible for the GUI
+/**
+ * Created by Nishant
+ * This class handles the GUI of the program, as well as invoking
+ * the classes responsible for the algorithm
  */
 public class Gui extends JFrame {
     private JLabel input, search, constant, result;
@@ -25,10 +27,8 @@ public class Gui extends JFrame {
     private String path;
     private ArrayList<Node> seqIndices;
 
-    /*
-        Default constructor that sets up the GUI
-     */
-    public Gui(){
+    //Default constructor that sets up the GUI
+    public Gui() {
         menuBar = new JMenuBar();
         menu = new JMenu("File");
         open = new JMenuItem("Open");
@@ -44,7 +44,7 @@ public class Gui extends JFrame {
         open.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 path = chooseFile();
-                if (!path.equals("Invalid path")){
+                if (!path.equals("Invalid path")) {
                     try {
                         writeInput();
                     } catch (IOException e) {
@@ -58,14 +58,14 @@ public class Gui extends JFrame {
 
         export.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                try{
+                try {
                     File file = new File("Results.txt");
                     FileWriter writer = null;
                     writer = new FileWriter(file);
                     writer.write(TAresult.getText());
                     JOptionPane.showMessageDialog(getParent(),
                             "Results saved to" + file.getAbsolutePath());
-                } catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -89,35 +89,31 @@ public class Gui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    /*
-        Method that opens the JFileChooser to allow user to select text file
-     */
-    public String chooseFile(){
+    //Method that opens the JFileChooser to allow user to select text file
+    public String chooseFile() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Text files", "txt", "rtf");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(getParent());
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getAbsolutePath();
         } else {
             return "Invalid path";
         }
     }
-    
-    /*
-        Method that sets up the north panel
-     */
-    public void addNorth(){
+
+    //Method that sets up the north JPanel
+    public void addNorth() {
         input = new JLabel("Input           ");
         search = new JLabel("Search       ");
         constant = new JLabel("Constant k");
         TAinput = new JTextArea("Enter data with the following format" + "\n" + "A C G T" +
-                "\n" + "1,0,0,0" +"\n" + "0,0.5,0.5,0" + "\n" + "0.25, 0.25, 0.25, 0.25");
+                "\n" + "1,0,0,0" + "\n" + "0,0.5,0.5,0" + "\n" + "0.25, 0.25, 0.25, 0.25");
 
         TAinput.setRows(3);
         TAinput.setColumns(30);
-        JScrollPane scroll = new JScrollPane (TAinput,
+        JScrollPane scroll = new JScrollPane(TAinput,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         TFsearch = new JTextField();
         TFconstant = new JTextField();
@@ -144,13 +140,11 @@ public class Gui extends JFrame {
         north.add(innerNorth2, BorderLayout.CENTER);
         north.add(innerNorth3, BorderLayout.SOUTH);
 
-        add(north,BorderLayout.NORTH);
+        add(north, BorderLayout.NORTH);
     }
 
-    /*
-        Method that sets up the center panel
-     */
-    public void addCenter(){
+    //Method that sets up the center JPanel
+    public void addCenter() {
         start = new JButton("Start");
         pause = new JButton("Pause");
         stop = new JButton("Stop");
@@ -161,7 +155,7 @@ public class Gui extends JFrame {
 //                String result = wst.getResults();
 //                TAresult.setText(result);
             }
-        } );
+        });
 
 //        pause.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent e) {
@@ -180,13 +174,11 @@ public class Gui extends JFrame {
         center.add(pause);
         center.add(stop);
 
-        add(center,BorderLayout.CENTER);
+        add(center, BorderLayout.CENTER);
     }
 
-    /*
-        Method that sets up the south panel
-     */
-    public void addSouth(){
+    //Method that sets up the south panel
+    public void addSouth() {
         result = new JLabel("Result");
         TAresult = new JTextArea();
 
@@ -197,26 +189,24 @@ public class Gui extends JFrame {
         add(south, BorderLayout.SOUTH);
     }
 
-    /*
-        Method that reads data from a text file chosen via the JFileChooser
-     */
+    //Method that reads data from a text file chosen via the JFileChooser
     public void writeInput() throws IOException {
         seqIndices = new ArrayList<Node>();
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line, data;
         data = br.readLine() + "\n";
-        
-        while((line = br.readLine())!=null){
+
+        while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
             double[] doubleValues = new double[values.length];
-            for(int i=0; i<values.length; i++){
+            for (int i = 0; i < values.length; i++) {
                 doubleValues[i] = Double.parseDouble(values[i]);
             }
-            Node temp = new Node(doubleValues[0],doubleValues[1],doubleValues[2],doubleValues[3]);
+            Node temp = new Node(doubleValues[0], doubleValues[1], doubleValues[2], doubleValues[3]);
             seqIndices.add(temp);
-            data+=line + "\n";
+            data += line + "\n";
         }
-        
+
         TAinput.setText(data);
         br.close();
         pack();

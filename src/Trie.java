@@ -1,5 +1,6 @@
 /**
- * Created by Nish on 08/04/2017.
+ * Created by Nishant
+ * This class sets up the Trie structure, and calls upon TrieNode
  */
 
 public class Trie {
@@ -11,7 +12,7 @@ public class Trie {
 
     // Inserts a word into the trie
     public void insertWord(String word) {
-        if(!word.isEmpty()) {
+        if (!word.isEmpty()) {
             TrieNode currentNode = root;
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
@@ -29,13 +30,13 @@ public class Trie {
         }
     }
 
-    // Searches for a whole word block
+    // Searches for an entire word
     public boolean searchWord(String word) {
         TrieNode currentNode = searchNode(word);
-        if(currentNode==null){
+        if (currentNode == null) {
             return false;
-        }else{
-            if(currentNode.isEnd()) {
+        } else {
+            if (currentNode.isEnd()) {
                 return true;
             }
         }
@@ -45,28 +46,33 @@ public class Trie {
     // Searches if there is any word in the trie that starts with the prefix
     public boolean startsWith(String prefix) {
         TrieNode currentNode = searchNode(prefix);
-        if(currentNode==null){
+        if (currentNode == null) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    //Algorithm for word search
-    public TrieNode searchNode(String s){
+    //Algorithm for searching function
+    public TrieNode searchNode(String s) {
         TrieNode currentNode = root;
-        for(int i=0; i<s.length(); i++){
-            char c= s.charAt(i);
-            int index = c-'a';
-            if(currentNode.getArray()[index]!=null){
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int index = c - 'a';
+            if (currentNode.getArray()[index] != null) {
                 currentNode = currentNode.getArray()[index];
-            }else{
+            } else {
                 return null;
             }
         }
-        if(currentNode==root) {
+        if (currentNode == root) {
             return null;
         }
         return currentNode;
+    }
+
+
+    public TrieNode getRoot(){
+        return root;
     }
 }
