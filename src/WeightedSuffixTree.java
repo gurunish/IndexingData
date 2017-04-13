@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Nishant
+ *
  * The algorithm for all phases are derived from "The Weighted Suffix Tree: An Efficient Data Structure for Handling
  * Molecular Weighted Sequences and its Applications" by C. S. Iliopoulous,  C. Makris, Y. Panagis, K. Perdikuri,
  * E. Theodoridos and A. Tsakalidis (2006)
@@ -21,15 +22,14 @@ public class WeightedSuffixTree {
         blackIndices = new ArrayList<Integer>();
         colorIndices = new int[weightedSequence.size()];
         t = new Trie();
-        LT = new ArrayList<Trie>();
+        LT = new ArrayList<>();
         k = constant;
         coloringPhase();
         generationPhase();
         constructionPhase();
     }
 
-    //Coloring phase algorithm
-    // O(n) complexity
+    //Phase 1- coloring phase which has O(n) complexity
     public void coloringPhase() {
         for (int i = 0; i < weightedSequence.size() - 1; i++) {
             if (weightedSequence.get(i).getA() == 0 || weightedSequence.get(i).getC() == 0 ||
@@ -48,6 +48,7 @@ public class WeightedSuffixTree {
         }
     }
 
+    //Phase 2- generation phase
     public void generationPhase() {
         for (int i : blackIndices) {
             int counter = 0;
@@ -71,7 +72,7 @@ public class WeightedSuffixTree {
                 counter = 0;
                 //for all leaves of t do
 
-                //extend(t, root, character c, probability(c) , color of j);
+                //extend(t, t.getRoot(), character c, probability(c) , color of j);
 
             }
             LT.add(t);
@@ -86,16 +87,17 @@ public class WeightedSuffixTree {
         // }
     }
 
+    //Extend algorithm for phase 2
     private void extend(Trie trie, TrieNode node, char c, double probabilityOfC, int color) {
-        if(node.getExtendedProbability() * probabilityOfC >= 1/k){
+        if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {
             TrieNode temp = new TrieNode();
-            int index = c-'a';
+            int index = c - 'a';
             node.setArrayIndex(index, temp);
-            temp.setActualProbability(node.getActualProbability()* probabilityOfC);
-            if( color ==0 || color ==1){
+            temp.setActualProbability(node.getActualProbability() * probabilityOfC);
+            if (color == 0 || color == 1) {
                 temp.setExtendedProbability(node.getActualProbability() * 1);
-                if(node.getD()>0){
-                    temp.setD(node.getD() +1);
+                if (node.getD() > 0) {
+                    temp.setD(node.getD() + 1);
                 } else {
                     temp.setD(0);
                 }

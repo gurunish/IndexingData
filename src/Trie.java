@@ -71,7 +71,7 @@ public class Trie {
         return currentNode;
     }
 
-
+    //Getter for root
     public TrieNode getRoot(){
         return root;
     }

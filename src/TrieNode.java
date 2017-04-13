@@ -1,16 +1,26 @@
 /**
  * Created by Nishant
+ * This class represents each node of the Trie data structure
  */
 class TrieNode {
     private TrieNode[] array;
     private int D;
-    private double actualProbability, extendedProbability;
+    private double a,c,g,t,actualProbability, extendedProbability;
     //Boolean value to check whether the node is a leaf or internal node
     private boolean isEnd;
 
     //Constructor for each trie node that allows storing alphabets from a-z
-    public TrieNode() {
-        this.array = new TrieNode[26];
+    public TrieNode(Double a, double c, double g, double t) {
+        this.a = a;
+        this.c = c;
+        this.g = g;
+        this.t = t;
+        array = new TrieNode[26];
+    }
+
+    //Alternative constructors
+    public TrieNode(){
+        array = new TrieNode[26];
     }
 
     //Getter for the TrieNode[] array

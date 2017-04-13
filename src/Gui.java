@@ -60,7 +60,7 @@ public class Gui extends JFrame {
             public void actionPerformed(ActionEvent ev) {
                 try {
                     File file = new File("Results.txt");
-                    FileWriter writer = null;
+                    FileWriter writer;
                     writer = new FileWriter(file);
                     writer.write(TAresult.getText());
                     JOptionPane.showMessageDialog(getParent(),
@@ -90,7 +90,7 @@ public class Gui extends JFrame {
     }
 
     //Method that opens the JFileChooser to allow user to select text file
-    public String chooseFile() {
+    private String chooseFile() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Text files", "txt", "rtf");
@@ -104,7 +104,7 @@ public class Gui extends JFrame {
     }
 
     //Method that sets up the north JPanel
-    public void addNorth() {
+    private void addNorth() {
         input = new JLabel("Input           ");
         search = new JLabel("Search       ");
         constant = new JLabel("Constant k");
@@ -144,7 +144,7 @@ public class Gui extends JFrame {
     }
 
     //Method that sets up the center JPanel
-    public void addCenter() {
+    private void addCenter() {
         start = new JButton("Start");
         pause = new JButton("Pause");
         stop = new JButton("Stop");
@@ -178,7 +178,7 @@ public class Gui extends JFrame {
     }
 
     //Method that sets up the south panel
-    public void addSouth() {
+    private void addSouth() {
         result = new JLabel("Result");
         TAresult = new JTextArea();
 
@@ -190,8 +190,8 @@ public class Gui extends JFrame {
     }
 
     //Method that reads data from a text file chosen via the JFileChooser
-    public void writeInput() throws IOException {
-        seqIndices = new ArrayList<Node>();
+    private void writeInput() throws IOException {
+        seqIndices = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line, data;
         data = br.readLine() + "\n";
