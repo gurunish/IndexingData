@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * Created by Nish on 06/04/2017.
+ * Created by Nishant
  */
 public class Subword {
     private ArrayList<Node> subWord;

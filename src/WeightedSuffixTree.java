@@ -78,13 +78,31 @@ public class WeightedSuffixTree {
         }
     }
 
+    //Construction phase
     private void constructionPhase() {
-        // TODO: 06/04/2017  
+        // declare weighted suffix tree
+        // for(leaves in LT) do {
+
+        // }
     }
 
     private void extend(Trie trie, TrieNode node, char c, double probabilityOfC, int color) {
         if(node.getExtendedProbability() * probabilityOfC >= 1/k){
-
+            TrieNode temp = new TrieNode();
+            int index = c-'a';
+            node.setArrayIndex(index, temp);
+            temp.setActualProbability(node.getActualProbability()* probabilityOfC);
+            if( color ==0 || color ==1){
+                temp.setExtendedProbability(node.getActualProbability() * 1);
+                if(node.getD()>0){
+                    temp.setD(node.getD() +1);
+                } else {
+                    temp.setD(0);
+                }
+            } else {
+                temp.setExtendedProbability(node.getExtendedProbability() * probabilityOfC);
+                temp.setD(0);
+            }
         }
     }
 }
