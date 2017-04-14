@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * E. Theodoridos and A. Tsakalidis (2006)
  */
 public class WeightedSuffixTree {
-    private ArrayList<Node> weightedSequence;
+    private ArrayList<TrieNode> weightedSequence;
     private double k;
     //stores the indices of black positions
     private ArrayList<Integer> blackIndices;
@@ -18,10 +18,10 @@ public class WeightedSuffixTree {
     private String searchWord;
     private ArrayList<Trie> LT;
 
-    public WeightedSuffixTree(ArrayList<Node> sequence, int constant, String word) {
+    public WeightedSuffixTree(ArrayList<TrieNode> sequence, int constant, String word) {
         weightedSequence = sequence;
         searchWord = word;
-        blackIndices = new ArrayList<Integer>();
+        blackIndices = new ArrayList<>();
         colorIndices = new int[sequence.size()];
         t = new Trie();
         LT = new ArrayList<>();
@@ -32,7 +32,7 @@ public class WeightedSuffixTree {
     }
 
     //Phase 1- coloring phase which has O(n) complexity
-    public void coloringPhase() {
+    private void coloringPhase() {
         for (int i = 0; i < weightedSequence.size() - 1; i++) {
             if (weightedSequence.get(i).getA() == 0 || weightedSequence.get(i).getC() == 0 ||
                     weightedSequence.get(i).getG() == 0 || weightedSequence.get(i).getT() == 0) {
@@ -48,28 +48,36 @@ public class WeightedSuffixTree {
                 blackIndices.add(i);
             }
         }
+        System.out.println("Coloring complete");
     }
 
     //Phase 2- generation phase
-    public void generationPhase() {
+    private void generationPhase() {
         for (int i : blackIndices) {
             int counter = 0;
             int current = i;
-            TrieNode temp = new TrieNode(weightedSequence.get(i).getA(), weightedSequence.get(i).getC(),
-                    weightedSequence.get(i).getG(), weightedSequence.get(i).getT());
             while (current + 1 < colorIndices.length) {
-                for (Node tempNode : weightedSequence) {
-                    if (tempNode.getA() > 1 - 1 / k || tempNode.getC() > 1 - 1 / k ||
-                            tempNode.getG() > 1 - 1 / k || tempNode.getT() > 1 - 1 / k) {
-
-                        //extend(t, t.getRoot(), character c, probability(c), colorIndices[i]);
+                for (TrieNode tempNode : weightedSequence) {
+                    if (tempNode.getA() > 1 - 1 / k){
+                        extend(t, tempNode, 'a', tempNode.getA(), colorIndices[i]);
+                        counter++;
+                    }
+                    if (tempNode.getC() > 1 - 1 / k){
+                        extend(t, tempNode, 'c', tempNode.getC(), colorIndices[i]);
+                        counter++;
+                    }
+                    if (tempNode.getG() > 1 - 1 / k){
+                        extend(t, tempNode, 'g', tempNode.getG(), colorIndices[i]);
+                        counter++;
+                    }
+                    if (tempNode.getT() > 1 - 1 / k){
+                        extend(t, tempNode, 't', tempNode.getT(), colorIndices[i]);
                         counter++;
                     }
                 }
                 current++;
             }
-
-            Node j = weightedSequence.get(i);
+            TrieNode j = weightedSequence.get(i);
             while (counter > 0) {
                 j = weightedSequence.get(i + 1);
                 counter = 0;
@@ -80,6 +88,7 @@ public class WeightedSuffixTree {
             }
             LT.add(t);
         }
+        System.out.println("Generation complete");
     }
 
     //Construction phase
@@ -88,8 +97,9 @@ public class WeightedSuffixTree {
         // for(leaves in LT) do {
 
         // }
-    }
 
+        System.out.println("Generation complete");
+    }
     //Extend algorithm for phase 2
     private void extend(Trie trie, TrieNode node, char c, double probabilityOfC, int color) {
         if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {

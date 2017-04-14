@@ -25,7 +25,7 @@ public class Gui extends JFrame {
     private JButton start, pause, stop;
     private JPanel north, center, south, innerNorth1, innerNorth2, innerNorth3;
     private String path;
-    private ArrayList<Node> seqIndices;
+    private ArrayList<TrieNode> seqIndices;
 
     //Default constructor that sets up the GUI
     public Gui() {
@@ -205,7 +205,7 @@ public class Gui extends JFrame {
             for (int i = 0; i < values.length; i++) {
                 doubleValues[i] = Double.parseDouble(values[i]);
             }
-            Node temp = new Node(doubleValues[0], doubleValues[1], doubleValues[2], doubleValues[3]);
+            TrieNode temp = new TrieNode(doubleValues[0], doubleValues[1], doubleValues[2], doubleValues[3]);
             seqIndices.add(temp);
             data += line + "\n";
         }

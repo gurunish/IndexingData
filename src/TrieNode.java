@@ -94,7 +94,7 @@ class TrieNode {
     }
 
     //Get probability of a character of this node
-    public double getActualProbability(char c) {
+    public double getCharProbability(char c) {
         switch (c) {
             case 'a':
                 return getA();
