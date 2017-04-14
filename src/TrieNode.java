@@ -9,6 +9,11 @@ class TrieNode {
     //Boolean value to check whether the node is a leaf or internal node
     private boolean isEnd;
 
+    //Alternative constructor
+    public TrieNode(){
+        array = new TrieNode[26];
+    }
+
     //Constructor for each trie node that allows storing alphabets from a-z
     public TrieNode(Double a, double c, double g, double t) {
         this.a = a;
@@ -18,9 +23,24 @@ class TrieNode {
         array = new TrieNode[26];
     }
 
-    //Alternative constructors
-    public TrieNode(){
-        array = new TrieNode[26];
+    //Getter for a
+    public double getA() {
+        return a;
+    }
+
+    //Getter for c
+    public double getC() {
+        return c;
+    }
+
+    //Getter for g
+    public double getG() {
+        return g;
+    }
+
+    //Getter for t
+    public double getT() {
+        return t;
     }
 
     //Getter for the TrieNode[] array
@@ -71,5 +91,21 @@ class TrieNode {
     //Setter for int D
     public void setD(int d) {
         D = d;
+    }
+
+    //Get probability of a character of this node
+    public double getActualProbability(char c) {
+        switch (c) {
+            case 'a':
+                return getA();
+            case 'c':
+                return getC();
+            case 'g':
+                return getG();
+            case 't':
+                return getG();
+            default:
+                return 0;
+        }
     }
 }

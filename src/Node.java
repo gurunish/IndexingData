@@ -12,11 +12,6 @@ public class Node {
         t = fourth;
     }
 
-    @Override
-    public String toString() {
-        return "" + a + " " + c + " " + g + " " + t;
-    }
-
     public double getT() {
         return t;
     }
@@ -31,20 +26,5 @@ public class Node {
 
     public double getA() {
         return a;
-    }
-
-    public double getActualProbability(char c) {
-        switch (c) {
-            case 'a':
-                return getA();
-            case 'c':
-                return getC();
-            case 'g':
-                return getG();
-            case 't':
-                return getG();
-            default:
-                return 0;
-        }
     }
 }

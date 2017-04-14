@@ -30,6 +30,7 @@ public class Gui extends JFrame {
     //Default constructor that sets up the GUI
     public Gui() {
         menuBar = new JMenuBar();
+        seqIndices = new ArrayList<>();
         menu = new JMenu("File");
         open = new JMenuItem("Open");
         export = new JMenuItem("Export results");
@@ -151,7 +152,9 @@ public class Gui extends JFrame {
 
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                WeightedSuffixTree wst = new WeightedSuffixTree(seqIndices, Integer.parseInt(TFconstant.getText()));
+                WeightedSuffixTree wst = new WeightedSuffixTree(seqIndices, Integer.parseInt(TFconstant.getText()),
+                        TFsearch.getText());
+
 //                String result = wst.getResults();
 //                TAresult.setText(result);
             }

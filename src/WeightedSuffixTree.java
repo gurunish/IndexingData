@@ -15,12 +15,14 @@ public class WeightedSuffixTree {
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
     private Trie t;
+    private String searchWord;
     private ArrayList<Trie> LT;
 
-    public WeightedSuffixTree(ArrayList<Node> sequence, int constant) {
+    public WeightedSuffixTree(ArrayList<Node> sequence, int constant, String word) {
         weightedSequence = sequence;
+        searchWord = word;
         blackIndices = new ArrayList<Integer>();
-        colorIndices = new int[weightedSequence.size()];
+        colorIndices = new int[sequence.size()];
         t = new Trie();
         LT = new ArrayList<>();
         k = constant;
@@ -52,9 +54,9 @@ public class WeightedSuffixTree {
     public void generationPhase() {
         for (int i : blackIndices) {
             int counter = 0;
-
             int current = i;
-            Subword temp = new Subword(weightedSequence.get(i));
+            TrieNode temp = new TrieNode(weightedSequence.get(i).getA(), weightedSequence.get(i).getC(),
+                    weightedSequence.get(i).getG(), weightedSequence.get(i).getT());
             while (current + 1 < colorIndices.length) {
                 for (Node tempNode : weightedSequence) {
                     if (tempNode.getA() > 1 - 1 / k || tempNode.getC() > 1 - 1 / k ||
@@ -64,6 +66,7 @@ public class WeightedSuffixTree {
                         counter++;
                     }
                 }
+                current++;
             }
 
             Node j = weightedSequence.get(i);
