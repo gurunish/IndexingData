@@ -98,7 +98,7 @@ public class WeightedSuffixTree {
 
         // }
 
-        System.out.println("Generation complete");
+        System.out.println("Construction complete");
     }
     //Extend algorithm for phase 2
     private void extend(Trie trie, TrieNode node, char c, double probabilityOfC, int color) {

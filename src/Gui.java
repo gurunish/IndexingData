@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by Nishant
@@ -22,7 +23,7 @@ public class Gui extends JFrame {
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem open, export, exit;
-    private JButton start, pause, stop;
+    private JButton start, read, stop;
     private JPanel north, center, south, innerNorth1, innerNorth2, innerNorth3;
     private String path;
     private ArrayList<TrieNode> seqIndices;
@@ -57,21 +58,7 @@ public class Gui extends JFrame {
             }
         });
 
-        export.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                try {
-                    File file = new File("Results.txt");
-                    FileWriter writer;
-                    writer = new FileWriter(file);
-                    writer.write(TAresult.getText());
-                    JOptionPane.showMessageDialog(getParent(),
-                            "Results saved to" + file.getAbsolutePath());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
+        export.addActionListener(new exportAction());
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 System.exit(0);
@@ -109,15 +96,15 @@ public class Gui extends JFrame {
         input = new JLabel("Input           ");
         search = new JLabel("Search       ");
         constant = new JLabel("Constant k");
-        TAinput = new JTextArea("Enter data with the following format" + "\n" + "A C G T" +
-                "\n" + "1,0,0,0" + "\n" + "0,0.5,0.5,0" + "\n" + "0.25, 0.25, 0.25, 0.25");
+        TAinput = new JTextArea("A C G T" +
+                "\n" + "1,0,0,0," + "\n" + "0,0.5,0.5,0," + "\n" + "0.25,0.25,0.25,0.25");
 
         TAinput.setRows(3);
         TAinput.setColumns(30);
         JScrollPane scroll = new JScrollPane(TAinput,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        TFsearch = new JTextField();
-        TFconstant = new JTextField();
+        TFsearch = new JTextField("aaaa");
+        TFconstant = new JTextField("2");
 
         north = new JPanel();
         innerNorth1 = new JPanel();
@@ -147,8 +134,15 @@ public class Gui extends JFrame {
     //Method that sets up the center JPanel
     private void addCenter() {
         start = new JButton("Start");
-        pause = new JButton("Pause");
+        read = new JButton("Read input");
         stop = new JButton("Stop");
+
+        read.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String line = TAinput.getText().substring(7);
+                generateSeqIndices(line);
+            }
+        });
 
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -158,23 +152,11 @@ public class Gui extends JFrame {
 //                String result = wst.getResults();
 //                TAresult.setText(result);
             }
-        });
-
-//        pause.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //May be redundant/unfeasible
-//            }
-//        } );
-//
-//        stop.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //May be redundant/unfeasible
-//            }
-//        } );
+        } );
 
         center = new JPanel();
+        center.add(read);
         center.add(start);
-        center.add(pause);
         center.add(stop);
 
         add(center, BorderLayout.CENTER);
@@ -200,18 +182,47 @@ public class Gui extends JFrame {
         data = br.readLine() + "\n";
 
         while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            double[] doubleValues = new double[values.length];
-            for (int i = 0; i < values.length; i++) {
-                doubleValues[i] = Double.parseDouble(values[i]);
-            }
-            TrieNode temp = new TrieNode(doubleValues[0], doubleValues[1], doubleValues[2], doubleValues[3]);
-            seqIndices.add(temp);
             data += line + "\n";
         }
 
+        generateSeqIndices(line);
         TAinput.setText(data);
         br.close();
         pack();
+    }
+
+    public void generateSeqIndices(String line){
+        System.out.println("Input was " + line);
+
+        //Store the weighted values into array doubleValues
+        String[] values = line.split(",");
+        double[] doubleValues = new double[values.length];
+        for(int i=0; i<values.length; i++){
+            doubleValues[i] = Double.parseDouble(values[i]);
+        }
+
+        //Create TrieNode from every 4 value in doubleValues
+        for(int i=0;i<=doubleValues.length;i++){
+            TrieNode temp = new TrieNode(doubleValues[i], doubleValues[i+1],
+                    doubleValues[i+2], doubleValues[i+3]);
+            seqIndices.add(temp);
+            System.out.println("New TrieNode created");
+            i+=4;
+        }
+    }
+
+    public class exportAction implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            try {
+                File file = new File("Results.txt");
+                FileWriter writer;
+                writer = new FileWriter(file);
+                writer.write(TAresult.getText());
+                JOptionPane.showMessageDialog(getParent(),
+                        "Results saved to" + file.getAbsolutePath());
+            } catch (IOException er) {
+                er.printStackTrace();
+            }
+        }
     }
 }
