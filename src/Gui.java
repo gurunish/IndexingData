@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by Nishant
@@ -148,11 +147,10 @@ public class Gui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 WeightedSuffixTree wst = new WeightedSuffixTree(seqIndices, Integer.parseInt(TFconstant.getText()),
                         TFsearch.getText());
-
-//                String result = wst.getResults();
-//                TAresult.setText(result);
+                String result = wst.getResult();
+                TAresult.setText(result);
             }
-        } );
+        });
 
         center = new JPanel();
         center.add(read);
@@ -191,27 +189,32 @@ public class Gui extends JFrame {
         pack();
     }
 
-    public void generateSeqIndices(String line){
+    public void generateSeqIndices(String line) {
         System.out.println("Input was " + line);
 
         //Store the weighted values into array doubleValues
         String[] values = line.split(",");
         double[] doubleValues = new double[values.length];
-        for(int i=0; i<values.length; i++){
+        for (int i = 0; i < values.length; i++) {
             doubleValues[i] = Double.parseDouble(values[i]);
         }
 
         //Create TrieNode from every 4 value in doubleValues
-        for(int i=0;i<=doubleValues.length;i++){
-            TrieNode temp = new TrieNode(doubleValues[i], doubleValues[i+1],
-                    doubleValues[i+2], doubleValues[i+3]);
+
+        int i = 0;
+        while (true) {
+            TrieNode temp = new TrieNode(doubleValues[i], doubleValues[i + 1],
+                    doubleValues[i + 2], doubleValues[i + 3]);
             seqIndices.add(temp);
             System.out.println("New TrieNode created");
-            i+=4;
+            i += 4;
+            if (i >= doubleValues.length) {
+                break;
+            }
         }
     }
 
-    public class exportAction implements ActionListener{
+    public class exportAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             try {
                 File file = new File("Results.txt");

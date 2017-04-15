@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by Nishant
  * This class sets up the Trie structure, and calls upon TrieNode
@@ -5,9 +7,10 @@
 
 public class Trie {
     private TrieNode root;
-
+    private ArrayList<TrieNode> leaves;
     public Trie() {
         root = new TrieNode();
+        leaves = new ArrayList<>();
     }
 
     // Inserts a word into the trie
@@ -27,6 +30,7 @@ public class Trie {
                 }
             }
             currentNode.setEnd(true);
+            leaves.add(currentNode);
         }
     }
 
@@ -74,5 +78,13 @@ public class Trie {
     //Getter for root
     public TrieNode getRoot(){
         return root;
+    }
+
+    public ArrayList<TrieNode> getLeaves(){
+        return leaves;
+    }
+    @Override
+    public String toString(){
+        return root.toString();
     }
 }

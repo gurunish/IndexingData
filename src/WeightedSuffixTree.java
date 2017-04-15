@@ -14,15 +14,15 @@ public class WeightedSuffixTree {
     private ArrayList<Integer> blackIndices;
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
+    String searchWord;
     private Trie t;
-    private String searchWord;
     private ArrayList<Trie> LT;
 
     public WeightedSuffixTree(ArrayList<TrieNode> sequence, int constant, String word) {
         weightedSequence = sequence;
-        searchWord = word;
         blackIndices = new ArrayList<>();
         colorIndices = new int[sequence.size()];
+        searchWord = word;
         t = new Trie();
         LT = new ArrayList<>();
         k = constant;
@@ -34,12 +34,12 @@ public class WeightedSuffixTree {
     //Phase 1- coloring phase which has O(n) complexity
     private void coloringPhase() {
         for (int i = 0; i < weightedSequence.size() - 1; i++) {
-            if (weightedSequence.get(i).getA() == 0 || weightedSequence.get(i).getC() == 0 ||
-                    weightedSequence.get(i).getG() == 0 || weightedSequence.get(i).getT() == 0) {
+            TrieNode temp = weightedSequence.get(i);
+            if (temp.getA() == 0 || temp.getC() == 0 || temp.getG() == 0 || temp.getT() == 0) {
                 //white node
                 colorIndices[i] = 0;
-            } else if (weightedSequence.get(i).getA() > 1 - 1 / k || weightedSequence.get(i).getC() > 1 - 1 / k ||
-                    weightedSequence.get(i).getG() > 1 - 1 / k || weightedSequence.get(i).getT() > 1 - 1 / k) {
+            } else if (temp.getA() > 1 - 1 / k || temp.getC() > 1 - 1 / k ||
+                    temp.getG() > 1 - 1 / k || temp.getT() > 1 - 1 / k) {
                 //gray node
                 colorIndices[i] = 1;
             } else {
@@ -81,10 +81,25 @@ public class WeightedSuffixTree {
             while (counter > 0) {
                 j = weightedSequence.get(i + 1);
                 counter = 0;
-                //for all leaves of t do
-
-                //extend(t, t.getRoot(), character c, probability(c) , color of j);
-
+                ArrayList<TrieNode> leaves = t.getLeaves();
+                for(TrieNode leaf: leaves){
+                    if(leaf.getA() > 1-1/k){
+                        extend(t, leaf, 'a', leaf.getA() , colorIndices[i+1]);
+                        counter++;
+                    }
+                    if(leaf.getC() > 1-1/k){
+                        extend(t, leaf, 'c', leaf.getA() , colorIndices[i+1]);
+                        counter++;
+                    }
+                    if(leaf.getG() > 1-1/k){
+                        extend(t, leaf, 'g', leaf.getA() , colorIndices[i+1]);
+                        counter++;
+                    }
+                    if(leaf.getT() > 1-1/k){
+                        extend(t, leaf, 't', leaf.getA() , colorIndices[i+1]);
+                        counter++;
+                    }
+                }
             }
             LT.add(t);
         }
@@ -98,6 +113,7 @@ public class WeightedSuffixTree {
 
         // }
 
+        System.out.println(t.toString());
         System.out.println("Construction complete");
     }
     //Extend algorithm for phase 2
@@ -119,5 +135,13 @@ public class WeightedSuffixTree {
                 temp.setD(0);
             }
         }
+    }
+
+    public String getResult(){
+        String results = "";
+        for(Trie t: LT){
+            results += t.searchNode(searchWord);
+        }
+        return results;
     }
 }
