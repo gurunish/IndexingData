@@ -29,7 +29,6 @@ public class Trie {
                     currentNode = currentNode.getArray()[index];
                 }
             }
-            currentNode.setEnd(true);
             leaves.add(currentNode);
         }
     }

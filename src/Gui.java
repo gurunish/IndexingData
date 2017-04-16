@@ -145,7 +145,7 @@ public class Gui extends JFrame {
 
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                WeightedSuffixTree wst = new WeightedSuffixTree(seqIndices, Integer.parseInt(TFconstant.getText()),
+                Algorithm wst = new Algorithm(seqIndices, Integer.parseInt(TFconstant.getText()),
                         TFsearch.getText());
                 String result = wst.getResult();
                 TAresult.setText(result);

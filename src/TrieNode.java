@@ -63,11 +63,6 @@ class TrieNode {
         return isEnd;
     }
 
-    //Setter for isEnd
-    public void setEnd(boolean end) {
-        isEnd = end;
-    }
-
     //Setter for an index of the array
     public void setArrayIndex(int index, TrieNode node) {
         array[index] = node;

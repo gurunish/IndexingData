@@ -7,18 +7,18 @@ import java.util.ArrayList;
  * Molecular Weighted Sequences and its Applications" by C. S. Iliopoulous,  C. Makris, Y. Panagis, K. Perdikuri,
  * E. Theodoridos and A. Tsakalidis (2006)
  */
-public class WeightedSuffixTree {
+public class Algorithm {
     private ArrayList<TrieNode> weightedSequence;
     private double k;
     //stores the indices of black positions
     private ArrayList<Integer> blackIndices;
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
-    String searchWord;
+    private String searchWord;
     private Trie t;
     private ArrayList<Trie> LT;
 
-    public WeightedSuffixTree(ArrayList<TrieNode> sequence, int constant, String word) {
+    public Algorithm(ArrayList<TrieNode> sequence, int constant, String word) {
         weightedSequence = sequence;
         blackIndices = new ArrayList<>();
         colorIndices = new int[sequence.size()];
@@ -106,14 +106,12 @@ public class WeightedSuffixTree {
         System.out.println("Generation complete");
     }
 
-    //Construction phase
+    //Phase 3- construction phase
     private void constructionPhase() {
         // declare weighted suffix tree
         // for(leaves in LT) do {
 
         // }
-
-        System.out.println(t.toString());
         System.out.println("Construction complete");
     }
     //Extend algorithm for phase 2
