@@ -80,9 +80,11 @@ public class Trie {
         return root;
     }
 
+    //Return leaves of Trie
     public ArrayList<TrieNode> getLeaves(){
         return leaves;
     }
+
     @Override
     public String toString(){
         return root.toString();

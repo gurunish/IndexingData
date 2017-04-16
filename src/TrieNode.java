@@ -71,6 +71,7 @@ class TrieNode {
     //Setter for an index of the array
     public void setArrayIndex(int index, TrieNode node) {
         array[index] = node;
+        isEnd = false;
     }
 
     //Getter for extendedProbability
