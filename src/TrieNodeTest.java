@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Assert;
 
 /**
  * Created by Nishant on 17/04/2017.
@@ -9,55 +9,55 @@ class TrieNodeTest {
 
     @org.junit.jupiter.api.Test
     void getA() {
-        assertEquals(0.1,testNode.getA());
-        assertNotEquals(0,testNode.getA());
+        Assert.assertEquals(0.1,testNode.getA(),0);
+        Assert.assertNotEquals(0,testNode.getA());
     }
 
     @org.junit.jupiter.api.Test
     void getC() {
-        assertEquals(0.2,testNode.getC());
-        assertNotEquals(0,testNode.getC());
+        Assert.assertEquals(0.2,testNode.getC(), 0);
+        Assert.assertNotEquals(0,testNode.getC());
     }
 
     @org.junit.jupiter.api.Test
     void getG() {
-        assertEquals(0.3,testNode.getG());
-        assertNotEquals(0,testNode.getG());
+        Assert.assertEquals(0.3,testNode.getG(),0);
+        Assert.assertNotEquals(0,testNode.getG());
     }
 
     @org.junit.jupiter.api.Test
     void getT() {
-        assertEquals(0.4,testNode.getT());
-        assertNotEquals(0,testNode.getT());
+        Assert.assertEquals(0.4,testNode.getT(),0);
+        Assert.assertNotEquals(0,testNode.getT());
     }
 
     @org.junit.jupiter.api.Test
     void getArray() {
-        assertArrayEquals(emptyArray,testNode.getArray());
+        Assert.assertArrayEquals(emptyArray,testNode.getArray());
     }
 
     @org.junit.jupiter.api.Test
     void isEnd() {
-        assertEquals(false,testNode.isEnd());
+        Assert.assertEquals(false,testNode.isEnd());
     }
 
     @org.junit.jupiter.api.Test
     void setArrayIndex() {
         TrieNode testNode2 = new TrieNode(0,0,0,1);
         testNode.setArrayIndex(0,testNode2);
-        assertEquals(false,testNode.isEnd());
-        assertEquals(testNode2,testNode.getArray()[0]);
+        Assert.assertEquals(false,testNode.isEnd());
+        Assert.assertEquals(testNode2,testNode.getArray()[0]);
     }
 
     @org.junit.jupiter.api.Test
     void getExtendedProbability() {
-        assertEquals(1,testNode.getExtendedProbability());
+        Assert.assertEquals(1,testNode.getExtendedProbability(),0);
     }
 
     @org.junit.jupiter.api.Test
     void setExtendedProbability() {
         testNode.setExtendedProbability(10);
-        assertEquals(10,testNode.getExtendedProbability());
+        Assert.assertEquals(10, testNode.getExtendedProbability(),0);
     }
 
     @org.junit.jupiter.api.Test

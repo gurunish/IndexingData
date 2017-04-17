@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 /**
  * Created by Nishant
- * <p>
  * The algorithm for all phases are derived from "The Weighted Suffix Tree: An Efficient Data Structure for Handling
  * Molecular Weighted Sequences and its Applications" by C. S. Iliopoulous,  C. Makris, Y. Panagis, K. Perdikuri,
  * E. Theodoridos and A. Tsakalidis (2006)
@@ -116,11 +115,14 @@ public class Algorithm {
         // for(leaves in LT) do {
         // }
         System.out.println("Construction complete");
+        System.out.println(t);
     }
 
     //Extend algorithm for phase 2
     private void extend(TrieNode node, char c, double probabilityOfC, int color) {
+        System.out.println("Extension decision in progress");
         if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {
+            System.out.println("Extension in progress");
             TrieNode temp = new TrieNode();
             int index = c - 'a';
             node.setArrayIndex(index, temp);

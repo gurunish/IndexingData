@@ -12,6 +12,8 @@ public class Trie {
     public Trie() {
         root = new TrieNode();
         leaves = new ArrayList<>();
+        root.setExtendedProbability(1);
+        root.setActualProbability(1);
     }
 
     // Inserts a word into the trie
