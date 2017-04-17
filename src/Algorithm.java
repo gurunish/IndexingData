@@ -48,7 +48,6 @@ public class Algorithm {
                 blackIndices.add(i);
             }
         }
-        System.out.println("Coloring complete");
     }
 
     //Phase 2- generation phase
@@ -60,25 +59,21 @@ public class Algorithm {
             while (current + 1 < colorIndices.length) {
                 for (int j = i; j < weightedSequence.size() - 1; j++) {
                     if (weightedSequence.get(i).getA() >= 1 / k) {
-                        System.out.println(i + " extended at A");
                         extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
                         word += 'a';
                         counter++;
                     }
                     if (weightedSequence.get(i).getC() >= 1 / k) {
-                        System.out.println(i + " extended at C");
                         extend(t.getRoot(), 'c', weightedSequence.get(current).getC(), colorIndices[i]);
                         word += 'c';
                         counter++;
                     }
                     if (weightedSequence.get(i).getG() >= 1 / k) {
-                        System.out.println(i + " extended at G");
                         extend(t.getRoot(), 'g', weightedSequence.get(current).getG(), colorIndices[i]);
                         word += 'g';
                         counter++;
                     }
                     if (weightedSequence.get(i).getT() >= 1 / k) {
-                        System.out.println(i + " extended at T");
                         extend(t.getRoot(), 't', weightedSequence.get(current).getT(), colorIndices[i]);
                         word += 't';
                         counter++;
@@ -117,7 +112,6 @@ public class Algorithm {
             t.insertWord(word);
             LT.add(t);
         }
-        System.out.println("Generation complete");
     }
 
     //Phase 3- construction phase
@@ -125,12 +119,10 @@ public class Algorithm {
         // declare weighted suffix tree
         // for(leaves in LT) do {
         // }
-        System.out.println("Construction complete");
     }
 
     //Extend algorithm for phase 2
     private void extend(TrieNode node, char c, double probabilityOfC, int color) {
-        System.out.println("Extension decision in progress");
         if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {
             TrieNode temp = new TrieNode();
             int index = c - 'a';

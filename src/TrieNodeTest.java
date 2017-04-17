@@ -38,7 +38,7 @@ class TrieNodeTest {
 
     @org.junit.jupiter.api.Test
     void isEnd() {
-        Assert.assertEquals(false,testNode.isEnd());
+        Assert.assertEquals(true,testNode.isEnd());
     }
 
     @org.junit.jupiter.api.Test
@@ -62,22 +62,28 @@ class TrieNodeTest {
 
     @org.junit.jupiter.api.Test
     void getActualProbability() {
+        Assert.assertEquals(1,testNode.getActualProbability(),0);
     }
 
     @org.junit.jupiter.api.Test
     void setActualProbability() {
+        Assert.assertEquals(1,testNode.getActualProbability(),0);
     }
 
     @org.junit.jupiter.api.Test
     void getD() {
+        Assert.assertEquals(0,testNode.getD(),0);
     }
 
     @org.junit.jupiter.api.Test
     void setD() {
+        testNode.setD(20);
+        Assert.assertEquals(20,testNode.getD(),0);
     }
 
     @org.junit.jupiter.api.Test
     void setEnd() {
+        testNode.setEnd(false);
+        Assert.assertEquals(false,testNode.isEnd());
     }
-
 }

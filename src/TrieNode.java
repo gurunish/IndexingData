@@ -22,8 +22,9 @@ class TrieNode {
         this.t = t;
         extendedProbability = 1;
         actualProbability = 1;
+        D=0;
         array = new TrieNode[26];
-        isEnd = false;
+        isEnd = true;
     }
 
     //Getter for a
@@ -92,7 +93,6 @@ class TrieNode {
     public void setD(int d) {
         D = d;
     }
-
 
     public void setEnd(boolean b) {
         isEnd = b;
