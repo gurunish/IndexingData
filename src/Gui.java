@@ -1,7 +1,3 @@
-/**
- * Created by Nishant
- */
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -191,16 +187,13 @@ public class Gui extends JFrame {
 
     public void generateSeqIndices(String line) {
         System.out.println("Input was " + line);
-
         //Store the weighted values into array doubleValues
         String[] values = line.split(",");
         double[] doubleValues = new double[values.length];
         for (int i = 0; i < values.length; i++) {
             doubleValues[i] = Double.parseDouble(values[i]);
         }
-
         //Create TrieNode from every 4 value in doubleValues
-
         int i = 0;
         while (true) {
             TrieNode temp = new TrieNode(doubleValues[i], doubleValues[i + 1],

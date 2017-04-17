@@ -33,7 +33,7 @@ public class Algorithm {
 
     //Phase 1- coloring phase which has O(n) complexity
     private void coloringPhase() {
-        for (int i = 0; i < weightedSequence.size() - 1; i++) {
+        for (int i = 0; i < weightedSequence.size(); i++) {
             TrieNode temp = weightedSequence.get(i);
             if (temp.getA() == 0 || temp.getC() == 0 || temp.getG() == 0 || temp.getT() == 0) {
                 //white node
@@ -54,24 +54,29 @@ public class Algorithm {
     //Phase 2- generation phase
     private void generationPhase() {
         for (int i : blackIndices) {
+            System.out.println("currently on blackIndex " + i);
             int counter = 0;
             int current = i;
             while (current + 1 < colorIndices.length) {
-                for (TrieNode tempNode : weightedSequence) {
-                    if (tempNode.getA() > 1 - 1 / k){
-                        extend(t, tempNode, 'a', tempNode.getA(), colorIndices[i]);
+                for (int j = i; j< weightedSequence.size()-1; j++) {
+                    if (weightedSequence.get(i).getA() >= 1 / k) {
+                        System.out.println(i + " extended at A");
+                        extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
                         counter++;
                     }
-                    if (tempNode.getC() > 1 - 1 / k){
-                        extend(t, tempNode, 'c', tempNode.getC(), colorIndices[i]);
+                    if (weightedSequence.get(i).getC() >= 1 / k) {
+                        System.out.println(i + " extended at C");
+                        extend(t.getRoot(), 'c', weightedSequence.get(current).getC(), colorIndices[i]);
                         counter++;
                     }
-                    if (tempNode.getG() > 1 - 1 / k){
-                        extend(t, tempNode, 'g', tempNode.getG(), colorIndices[i]);
+                    if (weightedSequence.get(i).getG() >= 1 / k) {
+                        System.out.println(i + " extended at G");
+                        extend(t.getRoot(), 'g', weightedSequence.get(current).getG(), colorIndices[i]);
                         counter++;
                     }
-                    if (tempNode.getT() > 1 - 1 / k){
-                        extend(t, tempNode, 't', tempNode.getT(), colorIndices[i]);
+                    if (weightedSequence.get(i).getT() >= 1 / k) {
+                        System.out.println(i + " extended at T");
+                        extend(t.getRoot(), 't', weightedSequence.get(current).getT(), colorIndices[i]);
                         counter++;
                     }
                 }
@@ -82,26 +87,27 @@ public class Algorithm {
                 j = weightedSequence.get(i + 1);
                 counter = 0;
                 ArrayList<TrieNode> leaves = t.getLeaves();
-                for(TrieNode leaf: leaves){
-                    if(leaf.getA() > 1-1/k){
-                        extend(t, leaf, 'a', leaf.getA() , colorIndices[i+1]);
+                for (TrieNode leaf : leaves) {
+                    if (leaf.getA() >= 1 / k) {
+                        extend(leaf, 'a', leaf.getA(), colorIndices[i + 1]);
                         counter++;
                     }
-                    if(leaf.getC() > 1-1/k){
-                        extend(t, leaf, 'c', leaf.getA() , colorIndices[i+1]);
+                    if (leaf.getC() >= 1 / k) {
+                        extend(leaf, 'c', leaf.getA(), colorIndices[i + 1]);
                         counter++;
                     }
-                    if(leaf.getG() > 1-1/k){
-                        extend(t, leaf, 'g', leaf.getA() , colorIndices[i+1]);
+                    if (leaf.getG() >= 1 / k) {
+                        extend(leaf, 'g', leaf.getA(), colorIndices[i + 1]);
                         counter++;
                     }
-                    if(leaf.getT() > 1-1/k){
-                        extend(t, leaf, 't', leaf.getA() , colorIndices[i+1]);
+                    if (leaf.getT() >= 1 / k) {
+                        extend(leaf, 't', leaf.getA(), colorIndices[i + 1]);
                         counter++;
                     }
                 }
             }
             LT.add(t);
+            System.out.println("no longer on blackIndex " + i);
         }
         System.out.println("Generation complete");
     }
@@ -110,12 +116,12 @@ public class Algorithm {
     private void constructionPhase() {
         // declare weighted suffix tree
         // for(leaves in LT) do {
-
         // }
         System.out.println("Construction complete");
     }
+
     //Extend algorithm for phase 2
-    private void extend(Trie trie, TrieNode node, char c, double probabilityOfC, int color) {
+    private void extend(TrieNode node, char c, double probabilityOfC, int color) {
         if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {
             TrieNode temp = new TrieNode();
             int index = c - 'a';
@@ -132,12 +138,14 @@ public class Algorithm {
                 temp.setExtendedProbability(node.getExtendedProbability() * probabilityOfC);
                 temp.setD(0);
             }
+            t.insertChar(c);
+            System.out.println("Extended");
         }
     }
 
-    public String getResult(){
+    public String getResult() {
         String results = "";
-        for(Trie t: LT){
+        for (Trie t : LT) {
             results += t.searchNode(searchWord);
         }
         return results;

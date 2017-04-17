@@ -15,11 +15,12 @@ class TrieNode {
     }
 
     //Constructor for each trie node that allows storing alphabets from a-z
-    public TrieNode(Double a, double c, double g, double t) {
+    public TrieNode(double a, double c, double g, double t) {
         this.a = a;
         this.c = c;
         this.g = g;
         this.t = t;
+        extendedProbability=1;
         array = new TrieNode[26];
     }
 
@@ -29,7 +30,6 @@ class TrieNode {
         for(TrieNode t: array){
             allChildren += getA() + " " + getC() +  " " + getG() + " " + getT() + "\n";
         }
-
         return allChildren;
     }
 
@@ -113,5 +113,9 @@ class TrieNode {
             default:
                 return 0;
         }
+    }
+
+    public void setEnd(boolean b) {
+        isEnd = b;
     }
 }
