@@ -26,15 +26,6 @@ class TrieNode {
         isEnd = false;
     }
 
-    @Override
-    public String toString() {
-        String allChildren = "";
-        for (TrieNode t : array) {
-            allChildren += getA() + " " + getC() + " " + getG() + " " + getT() + "\n";
-        }
-        return allChildren;
-    }
-
     //Getter for a
     public double getA() {
         return a;

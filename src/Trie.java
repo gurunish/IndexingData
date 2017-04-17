@@ -50,7 +50,6 @@ public class Trie {
             currentNode = currentNode.getArray()[index];
         }
         currentNode.setEnd(true);
-
     }
 
     // Searches for an entire word

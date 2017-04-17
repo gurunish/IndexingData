@@ -20,8 +20,7 @@ public class Main {
         what.add(x1);
         what.add(x2);
         what.add(y);
-
-        Algorithm c = new Algorithm(what, 5, "what");
+        Algorithm c = new Algorithm(what, 9, "what");
 
 //        Gui g = new Gui();
     }

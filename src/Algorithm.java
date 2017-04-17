@@ -14,6 +14,7 @@ public class Algorithm {
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
     private String searchWord;
+    private String word;
     private Trie t;
     private ArrayList<Trie> LT;
 
@@ -53,6 +54,7 @@ public class Algorithm {
     //Phase 2- generation phase
     private void generationPhase() {
         for (int i : blackIndices) {
+            word = "";
             int counter = 0;
             int current = i;
             while (current + 1 < colorIndices.length) {
@@ -60,21 +62,25 @@ public class Algorithm {
                     if (weightedSequence.get(i).getA() >= 1 / k) {
                         System.out.println(i + " extended at A");
                         extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
+                        word += 'a';
                         counter++;
                     }
                     if (weightedSequence.get(i).getC() >= 1 / k) {
                         System.out.println(i + " extended at C");
                         extend(t.getRoot(), 'c', weightedSequence.get(current).getC(), colorIndices[i]);
+                        word += 'c';
                         counter++;
                     }
                     if (weightedSequence.get(i).getG() >= 1 / k) {
                         System.out.println(i + " extended at G");
                         extend(t.getRoot(), 'g', weightedSequence.get(current).getG(), colorIndices[i]);
+                        word += 'g';
                         counter++;
                     }
                     if (weightedSequence.get(i).getT() >= 1 / k) {
                         System.out.println(i + " extended at T");
                         extend(t.getRoot(), 't', weightedSequence.get(current).getT(), colorIndices[i]);
+                        word += 't';
                         counter++;
                     }
                 }
@@ -88,22 +94,27 @@ public class Algorithm {
                 for (TrieNode leaf : leaves) {
                     if (leaf.getA() >= 1 / k) {
                         extend(leaf, 'a', leaf.getA(), colorIndices[i + 1]);
+                        word += 'a';
                         counter++;
                     }
                     if (leaf.getC() >= 1 / k) {
                         extend(leaf, 'c', leaf.getA(), colorIndices[i + 1]);
+                        word += 'c';
                         counter++;
                     }
                     if (leaf.getG() >= 1 / k) {
                         extend(leaf, 'g', leaf.getA(), colorIndices[i + 1]);
+                        word += 'g';
                         counter++;
                     }
                     if (leaf.getT() >= 1 / k) {
                         extend(leaf, 't', leaf.getA(), colorIndices[i + 1]);
+                        word += 't';
                         counter++;
                     }
                 }
             }
+            t.insertWord(word);
             LT.add(t);
         }
         System.out.println("Generation complete");
@@ -115,14 +126,12 @@ public class Algorithm {
         // for(leaves in LT) do {
         // }
         System.out.println("Construction complete");
-        System.out.println(t);
     }
 
     //Extend algorithm for phase 2
     private void extend(TrieNode node, char c, double probabilityOfC, int color) {
         System.out.println("Extension decision in progress");
         if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {
-            System.out.println("Extension in progress");
             TrieNode temp = new TrieNode();
             int index = c - 'a';
             node.setArrayIndex(index, temp);
@@ -138,7 +147,6 @@ public class Algorithm {
                 temp.setExtendedProbability(node.getExtendedProbability() * probabilityOfC);
                 temp.setD(0);
             }
-            t.insertChar(c);
             System.out.println("Extended");
         }
     }
