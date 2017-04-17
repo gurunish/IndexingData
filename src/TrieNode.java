@@ -5,12 +5,12 @@
 class TrieNode {
     private TrieNode[] array;
     private int D;
-    private double a,c,g,t,actualProbability, extendedProbability;
+    private double a, c, g, t, actualProbability, extendedProbability;
     //Boolean value to check whether the node is a leaf or internal node
     private boolean isEnd;
 
     //Alternative constructor
-    public TrieNode(){
+    public TrieNode() {
         array = new TrieNode[26];
     }
 
@@ -20,15 +20,17 @@ class TrieNode {
         this.c = c;
         this.g = g;
         this.t = t;
-        extendedProbability=1;
+        extendedProbability = 1;
+        actualProbability = 1;
         array = new TrieNode[26];
+        isEnd = false;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String allChildren = "";
-        for(TrieNode t: array){
-            allChildren += getA() + " " + getC() +  " " + getG() + " " + getT() + "\n";
+        for (TrieNode t : array) {
+            allChildren += getA() + " " + getC() + " " + getG() + " " + getT() + "\n";
         }
         return allChildren;
     }
@@ -67,6 +69,7 @@ class TrieNode {
     public void setArrayIndex(int index, TrieNode node) {
         array[index] = node;
         isEnd = false;
+        array[index].setEnd(true);
     }
 
     //Getter for extendedProbability
@@ -99,21 +102,6 @@ class TrieNode {
         D = d;
     }
 
-    //Get probability of a character of this node
-    public double getCharProbability(char c) {
-        switch (c) {
-            case 'a':
-                return getA();
-            case 'c':
-                return getC();
-            case 'g':
-                return getG();
-            case 't':
-                return getG();
-            default:
-                return 0;
-        }
-    }
 
     public void setEnd(boolean b) {
         isEnd = b;

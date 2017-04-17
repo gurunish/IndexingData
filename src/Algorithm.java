@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Nishant
- *
+ * <p>
  * The algorithm for all phases are derived from "The Weighted Suffix Tree: An Efficient Data Structure for Handling
  * Molecular Weighted Sequences and its Applications" by C. S. Iliopoulous,  C. Makris, Y. Panagis, K. Perdikuri,
  * E. Theodoridos and A. Tsakalidis (2006)
@@ -54,11 +54,10 @@ public class Algorithm {
     //Phase 2- generation phase
     private void generationPhase() {
         for (int i : blackIndices) {
-            System.out.println("currently on blackIndex " + i);
             int counter = 0;
             int current = i;
             while (current + 1 < colorIndices.length) {
-                for (int j = i; j< weightedSequence.size()-1; j++) {
+                for (int j = i; j < weightedSequence.size() - 1; j++) {
                     if (weightedSequence.get(i).getA() >= 1 / k) {
                         System.out.println(i + " extended at A");
                         extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
@@ -107,7 +106,6 @@ public class Algorithm {
                 }
             }
             LT.add(t);
-            System.out.println("no longer on blackIndex " + i);
         }
         System.out.println("Generation complete");
     }
