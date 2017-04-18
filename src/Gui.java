@@ -18,7 +18,7 @@ public class Gui extends JFrame {
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem open, export, exit;
-    private JButton start, read, stop;
+    private JButton start, read;
     private JPanel north, center, south, innerNorth1, innerNorth2, innerNorth3;
     private String path;
     private ArrayList<TrieNode> seqIndices;
@@ -88,11 +88,12 @@ public class Gui extends JFrame {
 
     //Method that sets up the north JPanel
     private void addNorth() {
-        input = new JLabel("Input           ");
-        search = new JLabel("Search       ");
-        constant = new JLabel("Constant k");
+        input = new JLabel("Input            ");
+        search = new JLabel("Search        ");
+        constant = new JLabel("Constant k ");
         TAinput = new JTextArea("A C G T" +
-                "\n" + "1,0,0,0," + "\n" + "0,0.5,0.5,0," + "\n" + "0.25,0.25,0.25,0.25");
+                "\n" + "1,0,0,0," + "\n" + "0,0.5,0.5,0," + "\n" + "0.25,0.25,0.25,0.25," + "\n"+
+                "0.25,0.25,0.25,0.25,"+"\n"+"0.1,0.2,0.3,0.4");
 
         TAinput.setRows(3);
         TAinput.setColumns(30);
@@ -126,11 +127,22 @@ public class Gui extends JFrame {
         add(north, BorderLayout.NORTH);
     }
 
-    //Method that sets up the center JPanel
+    //Method that sets up the south panel
     private void addCenter() {
+        result = new JLabel("Result          ");
+        TAresult = new JTextArea();
+
+        center = new JPanel();
+        center.setLayout(new BorderLayout());
+        center.add(result, BorderLayout.WEST);
+        center.add(TAresult, BorderLayout.CENTER);
+        add(center, BorderLayout.CENTER);
+    }
+
+    //Method that sets up the center JPanel
+    private void addSouth() {
         start = new JButton("Start");
         read = new JButton("Read input");
-        stop = new JButton("Stop");
 
         read.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -148,25 +160,12 @@ public class Gui extends JFrame {
             }
         });
 
-        center = new JPanel();
-        center.add(read);
-        center.add(start);
-        center.add(stop);
-
-        add(center, BorderLayout.CENTER);
-    }
-
-    //Method that sets up the south panel
-    private void addSouth() {
-        result = new JLabel("Result");
-        TAresult = new JTextArea();
-
         south = new JPanel();
-        south.setLayout(new BorderLayout());
-        south.add(result, BorderLayout.WEST);
-        south.add(TAresult, BorderLayout.CENTER);
+        south.add(read);
+        south.add(start);
         add(south, BorderLayout.SOUTH);
     }
+
 
     //Method that reads data from a text file chosen via the JFileChooser
     private void writeInput() throws IOException {
@@ -186,7 +185,6 @@ public class Gui extends JFrame {
     }
 
     public void generateSeqIndices(String line) {
-        System.out.println("Input was " + line);
         //Store the weighted values into array doubleValues
         String[] values = line.split(",");
         double[] doubleValues = new double[values.length];
@@ -199,7 +197,6 @@ public class Gui extends JFrame {
             TrieNode temp = new TrieNode(doubleValues[i], doubleValues[i + 1],
                     doubleValues[i + 2], doubleValues[i + 3]);
             seqIndices.add(temp);
-            System.out.println("New TrieNode created");
             i += 4;
             if (i >= doubleValues.length) {
                 break;

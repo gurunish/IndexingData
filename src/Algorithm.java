@@ -14,7 +14,6 @@ public class Algorithm {
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
     private String searchWord;
-    private String word;
     private Trie t;
     private ArrayList<Trie> LT;
 
@@ -53,7 +52,7 @@ public class Algorithm {
     //Phase 2- generation phase
     private void generationPhase() {
         for (int i : blackIndices) {
-            word = "";
+            String word = "";
             int counter = 0;
             int current = i;
             while (current + 1 < colorIndices.length) {
@@ -116,9 +115,13 @@ public class Algorithm {
 
     //Phase 3- construction phase
     private void constructionPhase() {
-        // declare weighted suffix tree
-        // for(leaves in LT) do {
-        // }
+        /* declare weighted suffix tree
+           for(leaves in LT) do {
+                Z' = path label of each leaf
+                compute redundancies of Dj
+                insert Z' to weighted suffix tree
+                retore actual subwords of Z' and  its suffixes in the WST
+        */
     }
 
     //Extend algorithm for phase 2
@@ -139,10 +142,10 @@ public class Algorithm {
                 temp.setExtendedProbability(node.getExtendedProbability() * probabilityOfC);
                 temp.setD(0);
             }
-            System.out.println("Extended");
         }
     }
 
+    //Method that returns results of pattern  matching
     public String getResult() {
         String results = "";
         for (Trie t : LT) {
