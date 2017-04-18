@@ -1,6 +1,4 @@
-import org.junit.Assert;
-
-/**
+import org.junit.Assert; /**
  * Created by Nishant on 17/04/2017.
  */
 class TrieNodeTest {
