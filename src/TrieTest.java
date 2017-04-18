@@ -18,22 +18,22 @@ class TrieTest {
     @Test
     void insertWord() {
         t.insertWord("abc");
-        Assert.assertEquals(true,t.searchWord("abc"));
-        Assert.assertEquals(false,t.searchWord("ab"));
+        Assert.assertEquals(true, t.searchWord("abc"));
+        Assert.assertEquals(false, t.searchWord("ab"));
 
     }
 
     @Test
     void searchWord() {
-        Assert.assertEquals(false,t.searchWord("xyz"));
+        Assert.assertEquals(false, t.searchWord("xyz"));
         t.insertWord("xyz");
-        Assert.assertEquals(true,t.searchWord("xyz"));
+        Assert.assertEquals(true, t.searchWord("xyz"));
     }
 
     @Test
     void searchNode() {
         t.insertWord("g");
-        int index  = 'g' - 'a';
+        int index = 'g' - 'a';
         Assert.assertEquals(t.getRoot().getArray()[index], t.searchNode("g"));
     }
 }

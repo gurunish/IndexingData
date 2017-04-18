@@ -53,7 +53,22 @@ public class Gui extends JFrame {
             }
         });
 
-        export.addActionListener(new exportAction());
+        export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    File file = new File("Results.txt");
+                    FileWriter writer;
+                    writer = new FileWriter(file);
+                    writer.write(TAresult.getText());
+                    JOptionPane.showMessageDialog(getParent(),
+                            "Results saved to" + file.getAbsolutePath());
+                } catch (IOException er) {
+                    er.printStackTrace();
+                }
+            }
+        });
+
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 System.exit(0);
@@ -92,8 +107,8 @@ public class Gui extends JFrame {
         search = new JLabel("Search        ");
         constant = new JLabel("Constant k ");
         TAinput = new JTextArea("A C G T" +
-                "\n" + "1,0,0,0," + "\n" + "0,0.5,0.5,0," + "\n" + "0.25,0.25,0.25,0.25," + "\n"+
-                "0.25,0.25,0.25,0.25,"+"\n"+"0.1,0.2,0.3,0.4");
+                "\n" + "1,0,0,0," + "\n" + "0,0.5,0.5,0," + "\n" + "0.25,0.25,0.25,0.25," + "\n" +
+                "0.25,0.25,0.25,0.25," + "\n" + "0.1,0.2,0.3,0.4");
 
         TAinput.setRows(3);
         TAinput.setColumns(30);
@@ -200,21 +215,6 @@ public class Gui extends JFrame {
             i += 4;
             if (i >= doubleValues.length) {
                 break;
-            }
-        }
-    }
-
-    public class exportAction implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            try {
-                File file = new File("Results.txt");
-                FileWriter writer;
-                writer = new FileWriter(file);
-                writer.write(TAresult.getText());
-                JOptionPane.showMessageDialog(getParent(),
-                        "Results saved to" + file.getAbsolutePath());
-            } catch (IOException er) {
-                er.printStackTrace();
             }
         }
     }
