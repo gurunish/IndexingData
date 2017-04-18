@@ -12,8 +12,6 @@ public class Trie {
     public Trie() {
         root = new TrieNode();
         leaves = new ArrayList<>();
-        root.setExtendedProbability(1);
-        root.setActualProbability(1);
     }
 
     // Inserts a word into the trie
@@ -34,22 +32,6 @@ public class Trie {
             }
             leaves.add(currentNode);
         }
-    }
-
-    // Inserts a word into the trie
-    public void insertChar(char c) {
-        TrieNode currentNode = root;
-        int index = c - 'a';  // 'a' has value of 97 so 'a' will be stored in [0], 't' will be stored at [19]
-        if (currentNode.getArray()[index] == null) {
-            //New node is added
-            TrieNode temp = new TrieNode();
-            currentNode.setArrayIndex(index, temp);
-            currentNode = temp; //next iteration(if necessary) continues from the new node
-            leaves.add(currentNode);
-        } else {
-            currentNode = currentNode.getArray()[index];
-        }
-        currentNode.setEnd(true);
     }
 
     // Searches for an entire word
@@ -91,10 +73,5 @@ public class Trie {
     //Return leaves of Trie
     public ArrayList<TrieNode> getLeaves() {
         return leaves;
-    }
-
-    @Override
-    public String toString() {
-        return root.toString();
     }
 }
