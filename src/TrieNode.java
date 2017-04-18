@@ -1,6 +1,13 @@
 /**
  * Created by Nishant
  * This class represents each node of the Trie data structure
+ * Based on the tutorial from the following source
+ * ***************************************************************************************
+ * Title: LeetCode – Implement Trie (Prefix Tree) (Java)
+ * Author: ProgramCreek
+ * Date: May 2015
+ * Code version: 1.0
+ * Availability: http://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/
  */
 class TrieNode {
     private TrieNode[] array;
@@ -22,7 +29,7 @@ class TrieNode {
         this.t = t;
         extendedProbability = 1;
         actualProbability = 1;
-        D=0;
+        D = 0;
         array = new TrieNode[26];
         isEnd = true;
     }

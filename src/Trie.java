@@ -3,6 +3,13 @@ import java.util.ArrayList;
 /**
  * Created by Nishant
  * This class sets up the Trie structure, and calls upon TrieNode
+ * Based on the tutorial from the following source
+ * ***************************************************************************************
+ * Title: LeetCode – Implement Trie (Prefix Tree) (Java)
+ * Author: ProgramCreek
+ * Date: May 2015
+ * Code version: 1.0
+ * Availability: http://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/
  */
 
 public class Trie {
