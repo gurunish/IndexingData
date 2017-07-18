@@ -25,6 +25,7 @@ public class Gui extends JFrame {
 
     //Default constructor that sets up the GUI
     public Gui() {
+        System.out.println("testing push");
         menuBar = new JMenuBar();
         seqIndices = new ArrayList<>();
         menu = new JMenu("File");
