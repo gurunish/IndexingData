@@ -9,6 +9,7 @@
  * Code version: 1.0
  * Availability: http://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/
  */
+
 class TrieNode {
     private TrieNode[] array;
     private int D;
@@ -69,36 +70,6 @@ class TrieNode {
         array[index] = node;
         isEnd = false;
         array[index].setEnd(true);
-    }
-
-    //Getter for extendedProbability
-    public double getExtendedProbability() {
-        return extendedProbability;
-    }
-
-    //Setter for extendedProbability
-    public void setExtendedProbability(double extendedProbability) {
-        this.extendedProbability = extendedProbability;
-    }
-
-    //Getter for actualProbability
-    public double getActualProbability() {
-        return actualProbability;
-    }
-
-    //Setter for actualProbability
-    public void setActualProbability(double actualProbability) {
-        this.actualProbability = actualProbability;
-    }
-
-    //Getter for int D
-    public int getD() {
-        return D;
-    }
-
-    //Setter for int D
-    public void setD(int d) {
-        D = d;
     }
 
     public void setEnd(boolean b) {

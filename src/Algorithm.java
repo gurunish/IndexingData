@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * E. Theodoridos and A. Tsakalidis (2006)
  */
 public class Algorithm {
-    private ArrayList<TrieNode> weightedSequence;
+    private ArrayList<TrieNode> weightedSequence, subwords;
     private double k;
     //stores the indices of black positions
     private ArrayList<Integer> blackIndices;
@@ -34,23 +34,39 @@ public class Algorithm {
     private void coloringPhase() {
         for (int i = 0; i < weightedSequence.size(); i++) {
             TrieNode temp = weightedSequence.get(i);
-            if (temp.getA() == 0 || temp.getC() == 0 || temp.getG() == 0 || temp.getT() == 0) {
-                //white node
+            if (temp.getA() == 1 || temp.getC() == 1 || temp.getG() == 1 || temp.getT() == 1) {
+                //white node; only one possible character
                 colorIndices[i] = 0;
             } else if (temp.getA() > 1 - 1 / k || temp.getC() > 1 - 1 / k ||
                     temp.getG() > 1 - 1 / k || temp.getT() > 1 - 1 / k) {
-                //gray node
+                //gray node; 0 possible characters
                 colorIndices[i] = 1;
             } else {
-                //black node
+                //black node; multiple possible characters
                 colorIndices[i] = 2;
                 blackIndices.add(i);
             }
         }
     }
 
-    //Phase 2- generation phase
+    /*
+        n = 5
+        1 - 1/5 = 0.8
+
+        One node a,c,g,t : 0.1, 0.2, 0.3, 0.4
+        black because no p(char) > 0.8
+
+        Second node a,c,b,t : 1, 0 ,0 ,0
+        white because p(a) = 1
+
+        Third node a,c,g,t : 0, 0.9, 0.1, 0
+        grey because p(g) > 0.8
+     */
+
+    //Phase 2 - generation phase
     private void generationPhase() {
+        subwords = new ArrayList<>();
+
         for (int i : blackIndices) {
             String word = "";
             int counter = 0;
@@ -80,6 +96,7 @@ public class Algorithm {
                 }
                 current++;
             }
+
             TrieNode j = weightedSequence.get(i);
             while (counter > 0) {
                 j = weightedSequence.get(i + 1);
