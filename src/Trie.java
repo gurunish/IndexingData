@@ -13,24 +13,24 @@ import java.util.ArrayList;
  */
 
 public class Trie {
-    private TrieNode root;
-    private ArrayList<TrieNode> leaves;
+    private Subword root;
+    private ArrayList<Subword> leaves;
 
     public Trie() {
-        root = new TrieNode();
+        root = new Subword();
         leaves = new ArrayList<>();
     }
 
     // Inserts a word into the trie
     public void insertWord(String word) {
         if (!word.isEmpty()) {
-            TrieNode currentNode = root;
+            Subword currentNode = root;
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
                 int index = c - 'a';  // 'a' has value of 97 so 'a' will be stored in [0], 't' will be stored at [19]
                 if (currentNode.getArray()[index] == null) {
                     //New node is added
-                    TrieNode temp = new TrieNode();
+                    Subword temp = new Subword();
                     currentNode.setArrayIndex(index, temp);
                     currentNode = temp; //next iteration(if necessary) continues from the new node
                 } else {
@@ -78,7 +78,7 @@ public class Trie {
     }
 
     //Return leaves of Trie
-    public ArrayList<TrieNode> getLeaves() {
+    public ArrayList<Subword> getLeaves() {
         return leaves;
     }
 }

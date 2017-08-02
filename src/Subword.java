@@ -1,11 +1,19 @@
-public class Subword {
+import java.util.ArrayList;
+
+public class Subword extends TrieNode {
     private double actualProbability, extendedProbability;
     private int D;
+    private Subword root;
+    private ArrayList<TrieNode> leaves;
+    private Subword[] array;
 
-    public Subword(){
-
+    public Subword() {
+        root = new Subword();
+        root.setActualProbability(1);
+        root.setExtendedProbability(1);
+        leaves = new ArrayList<>();
+        array = new Subword[26];
     }
-
     //Getter for extendedProbability
     public double getExtendedProbability() {
         return extendedProbability;
@@ -34,5 +42,22 @@ public class Subword {
     //Setter for int D
     public void setD(int d) {
         D = d;
+    }
+
+    //Getter for root
+    public Subword getRoot() {
+        return root;
+    }
+
+    //Getter for children of the root
+    @Override
+    public Subword[] getArray() {
+        return array;
+    }
+
+    // Sets up a child node for a node
+    public void setArrayIndex(int index, Subword node) {
+        array[index] = node;
+        array[index].setEnd(true);
     }
 }

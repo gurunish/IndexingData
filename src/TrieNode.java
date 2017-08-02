@@ -12,8 +12,7 @@
 
 class TrieNode {
     private TrieNode[] array;
-    private int D;
-    private double a, c, g, t, actualProbability, extendedProbability;
+    private double a, c, g, t;
     //Boolean value to check whether the node is a leaf or internal node
     private boolean isEnd;
 
@@ -28,9 +27,6 @@ class TrieNode {
         this.c = c;
         this.g = g;
         this.t = t;
-        extendedProbability = 1;
-        actualProbability = 1;
-        D = 0;
         array = new TrieNode[26];
         isEnd = true;
     }
