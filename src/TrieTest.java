@@ -1,11 +1,14 @@
+/*
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+*/
 /**
  * Created by Nishant on 18/04/2017.
- */
+ *//*
+
 class TrieTest {
     Trie t = new Trie();
     private ArrayList<TrieNode> leaves = new ArrayList<>();
@@ -36,4 +39,4 @@ class TrieTest {
         int index = 'g' - 'a';
         Assert.assertEquals(t.getRoot().getArray()[index], t.searchNode("g"));
     }
-}
+}*/

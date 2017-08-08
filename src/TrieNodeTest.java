@@ -1,8 +1,11 @@
+/*
 import org.junit.Assert;
 
+*/
 /**
  * Created by Nishant on 17/04/2017.
- */
+ *//*
+
 class TrieNodeTest {
     TrieNode testNode = new TrieNode(0.1, 0.2, 0.3, 0.4);
     TrieNode[] emptyArray = new TrieNode[26];
@@ -86,4 +89,4 @@ class TrieNodeTest {
         testNode.setEnd(false);
         Assert.assertEquals(false, testNode.isEnd());
     }
-}
+}*/

@@ -3,17 +3,16 @@ import java.util.ArrayList;
 public class Subword extends TrieNode {
     private double actualProbability, extendedProbability;
     private int D;
-    private Subword root;
     private ArrayList<TrieNode> leaves;
     private Subword[] array;
 
     public Subword() {
-        root = new Subword();
-        root.setActualProbability(1);
-        root.setExtendedProbability(1);
+        this.setActualProbability(1);
+        this.setExtendedProbability(1);
         leaves = new ArrayList<>();
         array = new Subword[26];
     }
+
     //Getter for extendedProbability
     public double getExtendedProbability() {
         return extendedProbability;
@@ -46,7 +45,7 @@ public class Subword extends TrieNode {
 
     //Getter for root
     public Subword getRoot() {
-        return root;
+        return this;
     }
 
     //Getter for children of the root
