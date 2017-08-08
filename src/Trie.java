@@ -43,7 +43,7 @@ public class Trie {
 
     // Searches for an entire word
     public boolean searchWord(String word) {
-        TrieNode currentNode = searchNode(word);
+        Subword currentNode = searchNode(word);
         if (currentNode == null) {
             return false;
         } else {
@@ -55,8 +55,8 @@ public class Trie {
     }
 
     //Algorithm for searching function
-    public TrieNode searchNode(String s) {
-        TrieNode currentNode = root;
+    public Subword searchNode(String s) {
+        Subword currentNode = root;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             int index = c - 'a';
@@ -73,7 +73,7 @@ public class Trie {
     }
 
     //Getter for root
-    public TrieNode getRoot() {
+    public Subword getRoot() {
         return root;
     }
 
