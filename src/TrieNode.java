@@ -71,6 +71,10 @@ class TrieNode {
         array[index].setEnd(true);
     }
 
+    public String toString(){
+        return ""+ getA() + " " + getC() + " " + getG() + " " + getT();
+    }
+
     //Getter for extendedProbability
     public double getExtendedProbability() {
         return extendedProbability;

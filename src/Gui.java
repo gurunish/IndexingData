@@ -85,6 +85,8 @@ public class Gui extends JFrame {
         setResizable(false);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
     }
 
     //Method that opens the JFileChooser to allow user to select text file
@@ -115,7 +117,7 @@ public class Gui extends JFrame {
         JScrollPane scroll = new JScrollPane(TAinput,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         TFsearch = new JTextField("aaaa");
-        TFconstant = new JTextField("2");
+        TFconstant = new JTextField("5");
 
         north = new JPanel();
         innerNorth1 = new JPanel();
