@@ -13,11 +13,13 @@ public class Algorithm {
     private ArrayList<Integer> blackIndices;
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
-    private String word, searchWord;
+    private String searchWord;
+    private ArrayList<String> word;
     private Trie t;
     private ArrayList<Trie> LT;
 
     public Algorithm(ArrayList<TrieNode> sequence, int constant, String word) {
+        System.out.println("Building suffix tree");
         weightedSequence = sequence;
         blackIndices = new ArrayList<>();
         colorIndices = new int[sequence.size()];
@@ -27,14 +29,15 @@ public class Algorithm {
         k = constant;
         coloringPhase();
         generationPhase();
-        constructionPhase();
+        System.out.println("Building complete");
+        //constructionPhase();
     }
 
     //Phase 1- coloring phase which has O(n) complexity
     private void coloringPhase() {
         for (int i = 0; i < weightedSequence.size(); i++) {
             TrieNode temp = weightedSequence.get(i);
-            if (temp.getA() == 0 || temp.getC() == 0 || temp.getG() == 0 || temp.getT() == 0) {
+            if (temp.getA() == 1 || temp.getC() == 1 || temp.getG() == 1 || temp.getT() == 1) {
                 //white node
                 colorIndices[i] = 0;
             } else if (temp.getA() > 1 - 1 / k || temp.getC() > 1 - 1 / k || temp.getG() > 1 - 1 / k || temp.getT() > 1 - 1 / k) {
@@ -50,79 +53,81 @@ public class Algorithm {
         /*for(TrieNode x : weightedSequence){
             System.out.println(x);
         }
+        */
 
-        System.out.println("Black indices are ");
-        for(int x : blackIndices){
+        System.out.println("indices colors are ");
+        for(int x : colorIndices){
             System.out.print(" " +x);
         }
         System.out.println("");
-
-        */
     }
 
     //Phase 2- generation phase
     private void generationPhase() {
-        System.out.println("Generation phase began");
+        //System.out.println("Generation phase began");
         for (int i : blackIndices) {
             if(i+1 <= weightedSequence.size()){
-                System.out.println("Extending black index "+ i);
-                word = "";
+                //System.out.println("Extending black index "+ i);
+                word = new ArrayList<>();
                 int counter = 0;
                 int current = i;
-                //while (current + 1 < colorIndices.length) {
-                //  for (int j = i; j < weightedSequence.size() - 1; j++) {
                 if (weightedSequence.get(i).getA() >= 1 / k) {
                     extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
-                    word += 'a';
+                    word.add("a");
+                    t.insertWord("a");
                     counter++;
                 }
                 if (weightedSequence.get(i).getC() >= 1 / k) {
                     extend(t.getRoot(), 'c', weightedSequence.get(current).getC(), colorIndices[i]);
-                    word += 'c';
+                    word.add("c");
+                    t.insertWord("c");
                     counter++;
                 }
                 if (weightedSequence.get(i).getG() >= 1 / k) {
                     extend(t.getRoot(), 'g', weightedSequence.get(current).getG(), colorIndices[i]);
-                    word += 'g';
+                    word.add("g");
+                    t.insertWord("g");
                     counter++;
                 }
                 if (weightedSequence.get(i).getT() >= 1 / k) {
                     extend(t.getRoot(), 't', weightedSequence.get(current).getT(), colorIndices[i]);
-                    word += 't';
+                    word.add("t");
+                    t.insertWord("t");
                     counter++;
                 }
-                // }
                 current++;
-                //}
+
                 int extensionNumber = 1;
                 while (counter > 0 && i+extensionNumber <= weightedSequence.size()) {
                     counter = 0;
+                    System.out.println("Black extended by " + counter);
                     ArrayList<Subword> leaves = t.getLeaves();
                     for (Subword leaf : leaves) {
                         if (leaf.getA() >= 1 / k) {
                             extend(leaf, 'a', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word += 'a';
+                            word.add("a");
                             counter++;
                         }
                         if (leaf.getC() >= 1 / k) {
                             extend(leaf, 'c', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word += 'c';
+                            word.add("c");
                             counter++;
                         }
                         if (leaf.getG() >= 1 / k) {
                             extend(leaf, 'g', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word += 'g';
+                            word.add("g");
                             counter++;
                         }
                         if (leaf.getT() >= 1 / k) {
                             extend(leaf, 't', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word += 't';
+                            word.add("t");
                             counter++;
                         }
                     }
                 }
-                t.insertWord(word);
-                System.out.println(word);
+                for (String x: word){
+                    System.out.println("Words at index " + i + " " +x);
+                }
                 LT.add(t);
             }
         }

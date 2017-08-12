@@ -110,14 +110,14 @@ public class Gui extends JFrame {
         constant = new JLabel("Constant k ");
         TAinput = new JTextArea("A C G T" +
                 "\n" + "1,0,0,0," + "\n" + "0,0.5,0.5,0," + "\n" + "0.25,0.25,0.25,0.25," + "\n" +
-                "0.25,0.25,0.25,0.25," + "\n" + "0.1,0.2,0.3,0.4");
+                "0,0,1,0," + "\n" + "0.2,0.3,0.4,0.1," + "\n" + "0.05, 0.95, 0, 0");
 
         TAinput.setRows(3);
         TAinput.setColumns(30);
         JScrollPane scroll = new JScrollPane(TAinput,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        TFsearch = new JTextField("aaaa");
-        TFconstant = new JTextField("5");
+        TFsearch = new JTextField("agg");
+        TFconstant = new JTextField("10");
 
         north = new JPanel();
         innerNorth1 = new JPanel();
