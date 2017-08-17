@@ -22,7 +22,7 @@ public class Trie {
     }
 
     // Inserts a word into the trie
-    public void insertWord(String word) {
+    public void insertWord(String word, Subword subword) {
         if (!word.isEmpty()) {
             Subword currentNode = root;
             for (int i = 0; i < word.length(); i++) {
@@ -30,9 +30,9 @@ public class Trie {
                 int index = c - 'a';  // 'a' has value of 97 so 'a' will be stored in [0], 't' will be stored at [19]
                 if (currentNode.getArray()[index] == null) {
                     //New node is added
-                    Subword temp = new Subword();
-                    currentNode.setArrayIndex(index, temp);
-                    currentNode = temp; //next iteration(if necessary) continues from the new node
+                    //System.out.println("New subword added " + subword.getPrefix());
+                    currentNode.setArrayIndex(index, subword);
+                    currentNode = subword; //next iteration(if necessary) continues from the new node
                 } else {
                     currentNode = currentNode.getArray()[index];
                 }
@@ -82,3 +82,4 @@ public class Trie {
         return leaves;
     }
 }
+

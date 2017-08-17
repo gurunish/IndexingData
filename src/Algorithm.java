@@ -14,22 +14,18 @@ public class Algorithm {
     //0 is white, 1 is gray, 2 is black
     private int[] colorIndices;
     private String searchWord;
-    private ArrayList<String> word;
     private Trie t;
     private ArrayList<Trie> LT;
 
     public Algorithm(ArrayList<TrieNode> sequence, int constant, String word) {
-        System.out.println("Building suffix tree");
         weightedSequence = sequence;
         blackIndices = new ArrayList<>();
         colorIndices = new int[sequence.size()];
         searchWord = word;
-        t = new Trie();
-        LT = new ArrayList<>();
         k = constant;
+        LT = new ArrayList<>();
         coloringPhase();
         generationPhase();
-        System.out.println("Building complete");
         //constructionPhase();
     }
 
@@ -50,88 +46,78 @@ public class Algorithm {
             }
         }
 
-        /*for(TrieNode x : weightedSequence){
-            System.out.println(x);
-        }
-        */
-
         System.out.println("indices colors are ");
-        for(int x : colorIndices){
-            System.out.print(" " +x);
+        for (int x : colorIndices) {
+            System.out.print(" " + x);
         }
         System.out.println("");
     }
 
     //Phase 2- generation phase
     private void generationPhase() {
-        //System.out.println("Generation phase began");
         for (int i : blackIndices) {
-            if(i+1 <= weightedSequence.size()){
-                //System.out.println("Extending black index "+ i);
-                word = new ArrayList<>();
+            t = new Trie();
+            if (i + 1 <= weightedSequence.size()) {
+                System.out.println("Extending black index " + i);
                 int counter = 0;
                 int current = i;
                 if (weightedSequence.get(i).getA() >= 1 / k) {
                     extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
-                    word.add("a");
-                    t.insertWord("a");
                     counter++;
                 }
                 if (weightedSequence.get(i).getC() >= 1 / k) {
                     extend(t.getRoot(), 'c', weightedSequence.get(current).getC(), colorIndices[i]);
-                    word.add("c");
-                    t.insertWord("c");
                     counter++;
                 }
                 if (weightedSequence.get(i).getG() >= 1 / k) {
                     extend(t.getRoot(), 'g', weightedSequence.get(current).getG(), colorIndices[i]);
-                    word.add("g");
-                    t.insertWord("g");
                     counter++;
                 }
                 if (weightedSequence.get(i).getT() >= 1 / k) {
                     extend(t.getRoot(), 't', weightedSequence.get(current).getT(), colorIndices[i]);
-                    word.add("t");
-                    t.insertWord("t");
                     counter++;
                 }
                 current++;
 
                 int extensionNumber = 1;
-                while (counter > 0 && i+extensionNumber <= weightedSequence.size()) {
+                System.out.println("Leaf extension begin");
+                while (counter > 0) {
                     counter = 0;
-                    System.out.println("Black extended by " + counter);
                     ArrayList<Subword> leaves = t.getLeaves();
-                    for (Subword leaf : leaves) {
-                        if (leaf.getA() >= 1 / k) {
-                            extend(leaf, 'a', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word.add("a");
+                    for (int y = 0; y<leaves.size(); y++){
+                        Subword leaf = leaves.get(y);
+                        TrieNode nextNode = weightedSequence.get(i + extensionNumber);
+
+                        if (nextNode.getA() >= 1 / k) {
+                            extend(leaf, 'a', nextNode.getA(), colorIndices[i + extensionNumber]);
                             counter++;
                         }
-                        if (leaf.getC() >= 1 / k) {
-                            extend(leaf, 'c', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word.add("c");
+                        if (nextNode.getC() >= 1 / k) {
+                            extend(leaf, 'c', nextNode.getC(), colorIndices[i + extensionNumber]);
                             counter++;
                         }
-                        if (leaf.getG() >= 1 / k) {
-                            extend(leaf, 'g', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word.add("g");
+                        if (nextNode.getG() >= 1 / k) {
+                            extend(leaf, 'g', nextNode.getG(), colorIndices[i + extensionNumber]);
                             counter++;
                         }
-                        if (leaf.getT() >= 1 / k) {
-                            extend(leaf, 't', leaf.getA(), colorIndices[i+extensionNumber]);
-                            word.add("t");
+                        if (nextNode.getT() >= 1 / k) {
+                            extend(leaf, 't', nextNode.getT(), colorIndices[i + extensionNumber]);
                             counter++;
+                        }
+                        extensionNumber++;
+                        if (i + extensionNumber == leaves.size()) {
+                            counter = 0;
                         }
                     }
                 }
-                for (String x: word){
-                    System.out.println("Words at index " + i + " " +x);
-                }
+                System.out.println("Leaf extension ends");
+
+                //for (String x: word){
+                //   System.out.println("Words at index " + i + " " +x);
+                //}
                 LT.add(t);
             }
         }
-        System.out.println("Generation phase ended");
     }
 
     //Phase 3- construction phase
@@ -152,7 +138,6 @@ public class Algorithm {
         if (node.getExtendedProbability() * probabilityOfC >= 1 / k) {
             Subword temp = new Subword();
             int index = c - 'a';
-            node.setArrayIndex(index, temp);
             temp.setActualProbability(node.getActualProbability() * probabilityOfC);
             if (color == 0 || color == 1) {
                 temp.setExtendedProbability(node.getActualProbability());
@@ -165,14 +150,21 @@ public class Algorithm {
                 temp.setExtendedProbability(node.getExtendedProbability() * probabilityOfC);
                 temp.setD(0);
             }
+            temp.setPrefix(node.getPrefix() + c);
+            t.insertWord(temp.getPrefix(), temp);
+            node.setArrayIndex(index, temp);
+            System.out.println("INSIDE EXTEND:" + temp.getPrefix() + " was added");
         }
     }
 
     //Method that returns results of pattern  matching
     public String getResult() {
-        String results = "";
-        for (Trie t : LT) {
-            results += t.searchNode(searchWord);
+        String results = "false";
+        for (Trie x : LT) {
+            if (x.searchWord(searchWord)) {
+                results = "true";
+                break;
+            }
         }
         return results;
     }

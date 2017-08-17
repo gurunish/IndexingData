@@ -1,9 +1,8 @@
-import java.util.ArrayList;
-
 public class Subword extends TrieNode{
     private double actualProbability, extendedProbability;
     private int D;
     private Subword[] array;
+    private String prefix;
     boolean isEnd;
 
     public Subword() {
@@ -11,6 +10,7 @@ public class Subword extends TrieNode{
         this.setExtendedProbability(1);
         array = new Subword[26];
         isEnd = true;
+        prefix = "";
     }
 
     //Getter for extendedProbability
@@ -57,6 +57,14 @@ public class Subword extends TrieNode{
     public void setArrayIndex(int index, Subword node) {
         array[index] = node;
         isEnd = false;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public void setEnd(Boolean value) {

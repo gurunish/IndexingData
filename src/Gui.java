@@ -85,9 +85,8 @@ public class Gui extends JFrame {
         setResizable(false);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
     }
+
 
     //Method that opens the JFileChooser to allow user to select text file
     private String chooseFile() {
@@ -165,6 +164,8 @@ public class Gui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String line = TAinput.getText().substring(7);
                 generateSeqIndices(line);
+                JOptionPane.showMessageDialog(getParent(),
+                        "Input has been read");
             }
         });
 
@@ -201,7 +202,7 @@ public class Gui extends JFrame {
         pack();
     }
 
-    public void generateSeqIndices(String line) {
+    private void generateSeqIndices(String line) {
         //Store the weighted values into array doubleValues
         String[] values = line.split(",");
         double[] doubleValues = new double[values.length];
