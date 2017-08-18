@@ -30,7 +30,6 @@ public class Trie {
                 int index = c - 'a';  // 'a' has value of 97 so 'a' will be stored in [0], 't' will be stored at [19]
                 if (currentNode.getArray()[index] == null) {
                     //New node is added
-                    //System.out.println("New subword added " + subword.getPrefix());
                     currentNode.setArrayIndex(index, subword);
                     currentNode = subword; //next iteration(if necessary) continues from the new node
                 } else {

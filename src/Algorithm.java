@@ -46,77 +46,74 @@ public class Algorithm {
             }
         }
 
-        System.out.println("indices colors are ");
-        for (int x : colorIndices) {
-            System.out.print(" " + x);
-        }
-        System.out.println("");
+        //System.out.println("indices colors are ");
+        //for (int x : colorIndices) {
+        //    System.out.print(" " + x);
+        //}
+        //System.out.println("");
     }
 
     //Phase 2- generation phase
     private void generationPhase() {
         for (int i : blackIndices) {
             t = new Trie();
-            if (i + 1 <= weightedSequence.size()) {
-                System.out.println("Extending black index " + i);
-                int counter = 0;
-                int current = i;
-                if (weightedSequence.get(i).getA() >= 1 / k) {
-                    extend(t.getRoot(), 'a', weightedSequence.get(current).getA(), colorIndices[i]);
-                    counter++;
-                }
-                if (weightedSequence.get(i).getC() >= 1 / k) {
-                    extend(t.getRoot(), 'c', weightedSequence.get(current).getC(), colorIndices[i]);
-                    counter++;
-                }
-                if (weightedSequence.get(i).getG() >= 1 / k) {
-                    extend(t.getRoot(), 'g', weightedSequence.get(current).getG(), colorIndices[i]);
-                    counter++;
-                }
-                if (weightedSequence.get(i).getT() >= 1 / k) {
-                    extend(t.getRoot(), 't', weightedSequence.get(current).getT(), colorIndices[i]);
-                    counter++;
-                }
-                current++;
+            if (i + 1 > weightedSequence.size()) {
+                break;
+            }
 
-                int extensionNumber = 1;
-                System.out.println("Leaf extension begin");
-                while (counter > 0) {
-                    counter = 0;
-                    ArrayList<Subword> leaves = t.getLeaves();
-                    for (int y = 0; y<leaves.size(); y++){
-                        Subword leaf = leaves.get(y);
-                        TrieNode nextNode = weightedSequence.get(i + extensionNumber);
+            System.out.println("Extending black index " + i);
+            int counter = 0;
+            if (weightedSequence.get(i).getA() >= 1 / k) {
+                extend(t.getRoot(), 'a', weightedSequence.get(i).getA(), colorIndices[i]);
+                counter++;
+            }
+            if (weightedSequence.get(i).getC() >= 1 / k) {
+                extend(t.getRoot(), 'c', weightedSequence.get(i).getC(), colorIndices[i]);
+                counter++;
+            }
+            if (weightedSequence.get(i).getG() >= 1 / k) {
+                extend(t.getRoot(), 'g', weightedSequence.get(i).getG(), colorIndices[i]);
+                counter++;
+            }
+            if (weightedSequence.get(i).getT() >= 1 / k) {
+                extend(t.getRoot(), 't', weightedSequence.get(i).getT(), colorIndices[i]);
+                counter++;
+            }
 
-                        if (nextNode.getA() >= 1 / k) {
-                            extend(leaf, 'a', nextNode.getA(), colorIndices[i + extensionNumber]);
-                            counter++;
-                        }
-                        if (nextNode.getC() >= 1 / k) {
-                            extend(leaf, 'c', nextNode.getC(), colorIndices[i + extensionNumber]);
-                            counter++;
-                        }
-                        if (nextNode.getG() >= 1 / k) {
-                            extend(leaf, 'g', nextNode.getG(), colorIndices[i + extensionNumber]);
-                            counter++;
-                        }
-                        if (nextNode.getT() >= 1 / k) {
-                            extend(leaf, 't', nextNode.getT(), colorIndices[i + extensionNumber]);
-                            counter++;
-                        }
-                        extensionNumber++;
-                        if (i + extensionNumber == leaves.size()) {
-                            counter = 0;
-                        }
+            int extensionNumber = 1;
+            System.out.println("Leaf extension begin");
+            while (counter > 0) {
+                counter = 0;
+                ArrayList<Subword> leaves = t.getLeaves();
+                for (int y = 0; y < leaves.size(); y++) {
+                    Subword leaf = leaves.get(y);
+                    TrieNode nextNode = weightedSequence.get(i + extensionNumber);
+                    System.out.println("Next node is :" + nextNode);
+                    if (nextNode.getA() >= 1 / k) {
+                        extend(leaf, 'a', nextNode.getA(), colorIndices[i + extensionNumber]);
+                        counter++;
+                    }
+                    if (nextNode.getC() >= 1 / k) {
+                        extend(leaf, 'c', nextNode.getC(), colorIndices[i + extensionNumber]);
+                        counter++;
+                    }
+                    if (nextNode.getG() >= 1 / k) {
+                        extend(leaf, 'g', nextNode.getG(), colorIndices[i + extensionNumber]);
+                        counter++;
+                    }
+                    if (nextNode.getT() >= 1 / k) {
+                        extend(leaf, 't', nextNode.getT(), colorIndices[i + extensionNumber]);
+                        counter++;
+                    }
+                    extensionNumber++;
+                    if (i + extensionNumber == weightedSequence.size()) {
+                        counter = 0;
+                        break;
                     }
                 }
-                System.out.println("Leaf extension ends");
-
-                //for (String x: word){
-                //   System.out.println("Words at index " + i + " " +x);
-                //}
-                LT.add(t);
             }
+            System.out.println("Leaf extension ends");
+            LT.add(t);
         }
     }
 

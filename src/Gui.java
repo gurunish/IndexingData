@@ -115,7 +115,7 @@ public class Gui extends JFrame {
         TAinput.setColumns(30);
         JScrollPane scroll = new JScrollPane(TAinput,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        TFsearch = new JTextField("agg");
+        TFsearch = new JTextField("cgg");
         TFconstant = new JTextField("10");
 
         north = new JPanel();
