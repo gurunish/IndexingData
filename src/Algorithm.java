@@ -88,6 +88,7 @@ public class Algorithm {
         ArrayList<Subword> leaves = t.getLeaves();
         System.out.println("Leaf extension begin");
         while (counter > 0) {
+            counter =0;
             for (int y = 0; y < leaves.size(); y++) {
                 Subword leaf = leaves.get(leafindex);
                 if(leaf.getNextIndex() < weightedSequence.size()){
