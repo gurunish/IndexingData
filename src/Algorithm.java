@@ -45,76 +45,85 @@ public class Algorithm {
                 blackIndices.add(i);
             }
         }
+        /*
+            System.out.println("indices colors are ");
+            for (int x : colorIndices) {
+                System.out.print(" " + x);
+            }
+            System.out.println("");
+         */
+    }
 
-        //System.out.println("indices colors are ");
-        //for (int x : colorIndices) {
-        //    System.out.print(" " + x);
-        //}
-        //System.out.println("");
+    private void generationPhase() {
+        createSubwords(0);
+        for (int i : blackIndices) {
+            createSubwords(i);
+        }
     }
 
     //Phase 2- generation phase
-    private void generationPhase() {
-        for (int i : blackIndices) {
-            t = new Trie();
-            if (i + 1 > weightedSequence.size()) {
-                break;
-            }
+    private void createSubwords(int i) {
+        t = new Trie();
+        System.out.println("Extending black index " + i);
 
-            System.out.println("Extending black index " + i);
-            int counter = 0;
-            if (weightedSequence.get(i).getA() >= 1 / k) {
-                extend(t.getRoot(), 'a', weightedSequence.get(i).getA(), colorIndices[i]);
-                counter++;
-            }
-            if (weightedSequence.get(i).getC() >= 1 / k) {
-                extend(t.getRoot(), 'c', weightedSequence.get(i).getC(), colorIndices[i]);
-                counter++;
-            }
-            if (weightedSequence.get(i).getG() >= 1 / k) {
-                extend(t.getRoot(), 'g', weightedSequence.get(i).getG(), colorIndices[i]);
-                counter++;
-            }
-            if (weightedSequence.get(i).getT() >= 1 / k) {
-                extend(t.getRoot(), 't', weightedSequence.get(i).getT(), colorIndices[i]);
-                counter++;
-            }
+        int counter = 0;
+        if (weightedSequence.get(i).getA() >= 1 / k) {
+            extend(t.getRoot(), 'a', weightedSequence.get(i).getA(), colorIndices[i]);
+            counter++;
+        }
+        if (weightedSequence.get(i).getC() >= 1 / k) {
+            extend(t.getRoot(), 'c', weightedSequence.get(i).getC(), colorIndices[i]);
+            counter++;
+        }
+        if (weightedSequence.get(i).getG() >= 1 / k) {
+            extend(t.getRoot(), 'g', weightedSequence.get(i).getG(), colorIndices[i]);
+            counter++;
+        }
+        if (weightedSequence.get(i).getT() >= 1 / k) {
+            extend(t.getRoot(), 't', weightedSequence.get(i).getT(), colorIndices[i]);
+            counter++;
+        }
 
-            int extensionNumber = 1;
-            System.out.println("Leaf extension begin");
-            while (counter > 0) {
-                counter = 0;
-                ArrayList<Subword> leaves = t.getLeaves();
-                for (int y = 0; y < leaves.size(); y++) {
-                    Subword leaf = leaves.get(y);
-                    TrieNode nextNode = weightedSequence.get(i + extensionNumber);
+        int leafindex = 0;
+        ArrayList<Subword> leaves = t.getLeaves();
+        System.out.println("Leaf extension begin");
+        while (counter > 0) {
+            for (int y = 0; y < leaves.size(); y++) {
+                Subword leaf = leaves.get(leafindex);
+                if(leaf.getNextIndex() < weightedSequence.size()){
+                    TrieNode nextNode = weightedSequence.get(leaf.getNextIndex());
+                    System.out.println("Extending leaf " + leafindex + " " + leaf.getPrefix());
                     System.out.println("Next node is :" + nextNode);
+                    counter =0;
+
                     if (nextNode.getA() >= 1 / k) {
-                        extend(leaf, 'a', nextNode.getA(), colorIndices[i + extensionNumber]);
+                        extend(leaf, 'a', nextNode.getA(), colorIndices[leaf.getNextIndex()]);
                         counter++;
                     }
                     if (nextNode.getC() >= 1 / k) {
-                        extend(leaf, 'c', nextNode.getC(), colorIndices[i + extensionNumber]);
+                        extend(leaf, 'c', nextNode.getC(), colorIndices[leaf.getNextIndex()]);
                         counter++;
                     }
                     if (nextNode.getG() >= 1 / k) {
-                        extend(leaf, 'g', nextNode.getG(), colorIndices[i + extensionNumber]);
+                        extend(leaf, 'g', nextNode.getG(), colorIndices[leaf.getNextIndex()]);
                         counter++;
                     }
                     if (nextNode.getT() >= 1 / k) {
-                        extend(leaf, 't', nextNode.getT(), colorIndices[i + extensionNumber]);
+                        extend(leaf, 't', nextNode.getT(), colorIndices[leaf.getNextIndex()]);
                         counter++;
                     }
-                    extensionNumber++;
-                    if (i + extensionNumber == weightedSequence.size()) {
-                        counter = 0;
-                        break;
+                    if(counter>0){
+                        System.out.println(leaf.getPrefix() + " was removed");
+                        t.removeLeaf(leaf.getPrefix());
                     }
+                } else {
+                    System.out.println("Could not extend " + leaf.getPrefix());
+                    leafindex++;
                 }
             }
-            System.out.println("Leaf extension ends");
-            LT.add(t);
         }
+        System.out.println("Leaf extension ends");
+        LT.add(t);
     }
 
     //Phase 3- construction phase
@@ -148,9 +157,10 @@ public class Algorithm {
                 temp.setD(0);
             }
             temp.setPrefix(node.getPrefix() + c);
+            temp.setNextIndex(node.getNextIndex()+1);
             t.insertWord(temp.getPrefix(), temp);
             node.setArrayIndex(index, temp);
-            System.out.println("INSIDE EXTEND:" + temp.getPrefix() + " was added");
+            System.out.println("Extend:Added " + temp.getPrefix());
         }
     }
 

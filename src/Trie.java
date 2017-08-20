@@ -71,6 +71,19 @@ public class Trie {
         return currentNode;
     }
 
+    public void removeLeaf(String prefix) {
+        int index = 0;
+        if (leaves.size() != 1) {
+            for (int i = 0; i < leaves.size(); i++) {
+                if (leaves.get(i).getPrefix().equals(prefix)) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        leaves.remove(index);
+    }
+
     //Getter for root
     public Subword getRoot() {
         return root;

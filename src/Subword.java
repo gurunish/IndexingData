@@ -1,6 +1,6 @@
 public class Subword extends TrieNode{
     private double actualProbability, extendedProbability;
-    private int D;
+    private int D, nextIndex;
     private Subword[] array;
     private String prefix;
     boolean isEnd;
@@ -11,6 +11,15 @@ public class Subword extends TrieNode{
         array = new Subword[26];
         isEnd = true;
         prefix = "";
+        nextIndex = 1;
+    }
+
+    public int getNextIndex() {
+        return nextIndex;
+    }
+
+    public void setNextIndex(int nextIndex) {
+        this.nextIndex = nextIndex;
     }
 
     //Getter for extendedProbability
