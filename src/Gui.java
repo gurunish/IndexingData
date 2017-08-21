@@ -39,33 +39,25 @@ public class Gui extends JFrame {
         menu.add(export);
         menu.add(exit);
 
-        open.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                path = chooseFile();
-                System.out.println(path);
-                if (!path.equals("Invalid path")) {
-                    try {
-                        writeInput();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        open.addActionListener(ev -> {
+            path = chooseFile();
+            System.out.println(path);
+            if (!path.equals("Invalid path")) {
+                try {
+                    writeInput();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
-        export.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    File file = new File("Results.txt");
-                    FileWriter writer;
-                    writer = new FileWriter(file);
-                    writer.write(TAresult.getText());
-                    JOptionPane.showMessageDialog(getParent(),
-                            "Results saved to" + file.getAbsolutePath());
-                } catch (IOException er) {
-                    er.printStackTrace();
-                }
+        export.addActionListener(e -> {
+            try{
+                PrintWriter writer = new PrintWriter("Results.txt", "UTF-8");
+                writer.println(TAresult.getText());
+                writer.close();
+            } catch (IOException ex) {
+                System.out.println(ex.getStackTrace());
             }
         });
 
@@ -176,11 +168,12 @@ public class Gui extends JFrame {
 
         build.addActionListener(e -> {
             JOptionPane.showMessageDialog(getParent(),
-                    "Build complete");
+                    "Weighted suffix tree build is complete");
             wst = new Algorithm(seqIndices, Integer.parseInt(TFconstant.getText()));
             searchButton.setEnabled(true);
             TFconstant.setEnabled(false);
             build.setEnabled(false);
+            open.setEnabled(false);
         });
 
         searchButton.addActionListener(e -> {

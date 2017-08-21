@@ -54,7 +54,7 @@ public class Algorithm {
     //Phase 2- generation phase
     private void createSubwords(int i) {
         t = new Trie();
-        System.out.println("Extending black index " + i);
+        //System.out.println("Extending index " + i);
 
         int counter = 0;
         if (weightedSequence.get(i).getA() >= 1 / k) {
@@ -81,11 +81,11 @@ public class Algorithm {
             counter =0;
             for (int y = 0; y < leaves.size(); y++) {
                 Subword leaf = leaves.get(leafIndex);
-                System.out.println("Leaf is " + leaf.getPrefix() + ", subindex:" + leaf.getSubwordIndex() + " nextIndex: " + leaf.getNextIndex());
+                //System.out.println("Leaf is " + leaf.getPrefix() + ", subindex:" + leaf.getSubwordIndex() + " nextIndex: " + leaf.getNextIndex());
                 if(leaf.getNextIndex() < weightedSequence.size()){
                     TrieNode nextNode = weightedSequence.get(leaf.getNextIndex());
-                    System.out.println("Extend attempt leaf " + leaf.getPrefix());
-                    System.out.println("Next node is :" + nextNode);
+                    //System.out.println("Extend attempt leaf " + leaf.getPrefix());
+                    //System.out.println("Next node is :" + nextNode);
                     counter =0;
 
                     if (nextNode.getA() >= 1 / k) {
@@ -146,7 +146,7 @@ public class Algorithm {
             temp.setPrefix(node.getPrefix() + c);
             t.insertWord(temp.getPrefix(), temp);
             node.setArrayIndex(index, temp);
-            System.out.println("Extend:Added " + temp.getPrefix());
+            //System.out.println("Extend:Added " + temp.getPrefix());
         }
     }
 
