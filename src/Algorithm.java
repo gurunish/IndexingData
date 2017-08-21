@@ -64,7 +64,7 @@ public class Algorithm {
     //Phase 2- generation phase
     private void createSubwords(int i) {
         t = new Trie();
-        System.out.println("Extending black index " + i);
+        //System.out.println("Extending black index " + i);
 
         int counter = 0;
         if (weightedSequence.get(i).getA() >= 1 / k) {
@@ -86,15 +86,15 @@ public class Algorithm {
 
         int leafindex = 0;
         ArrayList<Subword> leaves = t.getLeaves();
-        System.out.println("Leaf extension begin");
+        //System.out.println("Leaf extension begin");
         while (counter > 0) {
             counter =0;
             for (int y = 0; y < leaves.size(); y++) {
                 Subword leaf = leaves.get(leafindex);
                 if(leaf.getNextIndex() < weightedSequence.size()){
                     TrieNode nextNode = weightedSequence.get(leaf.getNextIndex());
-                    System.out.println("Extending leaf " + leafindex + " " + leaf.getPrefix());
-                    System.out.println("Next node is :" + nextNode);
+                    //System.out.println("Extending leaf " + leafindex + " " + leaf.getPrefix());
+                    //System.out.println("Next node is :" + nextNode);
                     counter =0;
 
                     if (nextNode.getA() >= 1 / k) {
@@ -114,7 +114,7 @@ public class Algorithm {
                         counter++;
                     }
                     if(counter>0){
-                        System.out.println(leaf.getPrefix() + " was removed");
+                        //System.out.println(leaf.getPrefix() + " was removed");
                         t.removeLeaf(leaf.getPrefix());
                     }
                 } else {
@@ -123,13 +123,13 @@ public class Algorithm {
                 }
             }
         }
-        System.out.println("Leaf extension ends");
+        //System.out.println("Leaf extension ends");
         LT.add(t);
     }
 
     //Phase 3- construction phase
     private void constructionPhase() {
-        System.out.println("Construction phase began");
+        //System.out.println("Construction phase began");
         /* declare weighted suffix tree
            for(leaves in LT) do {
                 Z' = path label of each leaf
@@ -137,7 +137,7 @@ public class Algorithm {
                 insert Z' to weighted suffix tree
                 retore actual subwords of Z' and  its suffixes in the WST
         */
-        System.out.println("Construction phase ended");
+        //System.out.println("Construction phase ended");
     }
 
     //Extend algorithm for phase 2
@@ -161,7 +161,7 @@ public class Algorithm {
             temp.setNextIndex(node.getNextIndex()+1);
             t.insertWord(temp.getPrefix(), temp);
             node.setArrayIndex(index, temp);
-            System.out.println("Extend:Added " + temp.getPrefix());
+            //System.out.println("Extend:Added " + temp.getPrefix());
         }
     }
 

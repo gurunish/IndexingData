@@ -41,14 +41,13 @@ public class Gui extends JFrame {
         open.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 path = chooseFile();
+                System.out.println(path);
                 if (!path.equals("Invalid path")) {
                     try {
                         writeInput();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
-                    System.out.println("Invalid file");
                 }
             }
         });
@@ -98,6 +97,8 @@ public class Gui extends JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             return chooser.getSelectedFile().getAbsolutePath();
         } else {
+            JOptionPane.showMessageDialog(getParent(),
+                    "Invalid path or file");
             return "Invalid path";
         }
     }
@@ -166,6 +167,8 @@ public class Gui extends JFrame {
                 generateSeqIndices(line);
                 JOptionPane.showMessageDialog(getParent(),
                         "Input has been read");
+                start.setEnabled(true);
+                read.setEnabled(false);
             }
         });
 
@@ -179,6 +182,7 @@ public class Gui extends JFrame {
         });
 
         south = new JPanel();
+        start.setEnabled(false);
         south.add(read);
         south.add(start);
         add(south, BorderLayout.SOUTH);
@@ -196,8 +200,8 @@ public class Gui extends JFrame {
             data += line + "\n";
         }
 
-        generateSeqIndices(line);
-        TAinput.setText(data);
+        generateSeqIndices(data);
+        TAinput.setText("A C G T" + "\n" + data);
         br.close();
         pack();
     }
