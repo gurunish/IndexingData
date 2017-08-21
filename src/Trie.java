@@ -71,6 +71,15 @@ public class Trie {
         return currentNode;
     }
 
+    public String searchIndices(String s) {
+        Subword sub = searchNode(s);
+        if (sub != null) {
+            return "" + sub.getSubwordIndex();
+        } else {
+            return "";
+        }
+    }
+
     public void removeLeaf(String prefix) {
         int index = 0;
         if (leaves.size() != 1) {

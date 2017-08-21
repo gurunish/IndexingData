@@ -18,10 +18,11 @@ public class Gui extends JFrame {
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem open, export, exit;
-    private JButton start, read;
+    private JButton build, read, searchButton;
     private JPanel north, center, south, innerNorth1, innerNorth2, innerNorth3;
     private String path;
     private ArrayList<TrieNode> seqIndices;
+    private Algorithm wst;
 
     //Default constructor that sets up the GUI
     public Gui() {
@@ -148,6 +149,8 @@ public class Gui extends JFrame {
     private void addCenter() {
         result = new JLabel("Result          ");
         TAresult = new JTextArea();
+        JScrollPane scroll = new JScrollPane(TAresult,
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         center = new JPanel();
         center.setLayout(new BorderLayout());
@@ -158,33 +161,39 @@ public class Gui extends JFrame {
 
     //Method that sets up the center JPanel
     private void addSouth() {
-        start = new JButton("Start");
         read = new JButton("Read input");
+        build = new JButton("Build");
+        searchButton = new JButton("Search");
 
-        read.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String line = TAinput.getText().substring(7);
-                generateSeqIndices(line);
-                JOptionPane.showMessageDialog(getParent(),
-                        "Input has been read");
-                start.setEnabled(true);
-                read.setEnabled(false);
-            }
+        read.addActionListener(e -> {
+            String line = TAinput.getText().substring(7);
+            generateSeqIndices(line);
+            JOptionPane.showMessageDialog(getParent(),
+                    "Input has been read");
+            build.setEnabled(true);
+            read.setEnabled(false);
         });
 
-        start.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Algorithm wst = new Algorithm(seqIndices, Integer.parseInt(TFconstant.getText()),
-                        TFsearch.getText());
-                String result = wst.getResult();
-                TAresult.setText(result);
-            }
+        build.addActionListener(e -> {
+            JOptionPane.showMessageDialog(getParent(),
+                    "Build complete");
+            wst = new Algorithm(seqIndices, Integer.parseInt(TFconstant.getText()));
+            searchButton.setEnabled(true);
+            TFconstant.setEnabled(false);
+            build.setEnabled(false);
+        });
+
+        searchButton.addActionListener(e -> {
+            String result = wst.getResult(TFsearch.getText());
+            TAresult.setText(result);
         });
 
         south = new JPanel();
-        start.setEnabled(false);
+        build.setEnabled(false);
+        searchButton.setEnabled(false);
         south.add(read);
-        south.add(start);
+        south.add(build);
+        south.add(searchButton);
         add(south, BorderLayout.SOUTH);
     }
 
