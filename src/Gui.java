@@ -142,12 +142,12 @@ public class Gui extends JFrame {
         result = new JLabel("Result          ");
         TAresult = new JTextArea();
         JScrollPane scroll = new JScrollPane(TAresult,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         center = new JPanel();
         center.setLayout(new BorderLayout());
         center.add(result, BorderLayout.WEST);
-        center.add(TAresult, BorderLayout.CENTER);
+        center.add(scroll, BorderLayout.CENTER);
         add(center, BorderLayout.CENTER);
     }
 
@@ -160,20 +160,20 @@ public class Gui extends JFrame {
         read.addActionListener(e -> {
             String line = TAinput.getText().substring(7);
             generateSeqIndices(line);
-            JOptionPane.showMessageDialog(getParent(),
-                    "Input has been read");
             build.setEnabled(true);
             read.setEnabled(false);
+            JOptionPane.showMessageDialog(getParent(),
+                    "Input has been read");
         });
 
         build.addActionListener(e -> {
-            JOptionPane.showMessageDialog(getParent(),
-                    "Weighted suffix tree build is complete");
             wst = new Algorithm(seqIndices, Integer.parseInt(TFconstant.getText()));
             searchButton.setEnabled(true);
             TFconstant.setEnabled(false);
             build.setEnabled(false);
             open.setEnabled(false);
+            JOptionPane.showMessageDialog(getParent(),
+                    "Weighted suffix tree build is complete");
         });
 
         searchButton.addActionListener(e -> {

@@ -1,3 +1,8 @@
+/**
+ * Created by Nishant
+ * This class aids to build the weighted suffix tree by the Algorithm class
+ */
+
 public class Subword extends TrieNode{
     private double actualProbability, extendedProbability;
     private int D;
